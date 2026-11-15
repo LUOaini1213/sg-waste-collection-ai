@@ -117,20 +117,20 @@ def check_route(inst, nodes) -> RouteReport:
         if msg:
             viol.append(msg)
     else:
+        # try every placement; report the one that finishes earliest (ties: earliest gap, B before A)
         first_msg = None
         for gap in range(len(nodes) - 1):
             for option in ("B", "A"):
                 st, msg = _simulate(inst, nodes, gap, option)
-                if msg is None:
+                if msg is not None:
+                    first_msg = first_msg or msg
+                    continue
+                if rest_used is None or st[-1] < starts[-1] - TOL:
                     starts = st
                     i = nodes[gap]
                     fin = st[gap] + float(inst.service[i])
                     b = max(fin, inst.rest[0]) if option == "A" else max(fin + float(inst.time[i, nodes[gap + 1]]), inst.rest[0])
                     rest_used = (gap, option, b)
-                    break
-                first_msg = first_msg or msg
-            if rest_used is not None:
-                break
         if rest_used is None:
             viol.append("no feasible break placement: " + (first_msg or "route too short"))
     return RouteReport(nodes, dist, total, stops, unloads, not viol, viol, starts, rest_used)

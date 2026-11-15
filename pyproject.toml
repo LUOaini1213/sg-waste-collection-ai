@@ -1,0 +1,10 @@
+[project]
+name = "sg-waste-collection-ai"
+version = "0.1.0"
+description = "Personal desk study: AI and optimisation for urban waste collection"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
