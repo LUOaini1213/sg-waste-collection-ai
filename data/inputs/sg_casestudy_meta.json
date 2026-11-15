@@ -1,0 +1,79 @@
+{
+ "town": "BISHAN",
+ "bins_in_town_hdb_estates_raw": 204,
+ "bins_after_dedup": 203,
+ "bins_matched_to_hdb_block": 180,
+ "median_units_used_for_unmatched": 82.5,
+ "town_bins_dwelling_units_total": 16799,
+ "facility": {
+  "street": "30 Attap Valley Road",
+  "nea_description": "Private municipal waste incineration plant",
+  "lat": 1.462258,
+  "lon": 103.794867
+ },
+ "depot": "ASSUMPTION: co-located with the facility",
+ "road_graph": {
+  "bbox_wsen": [
+   103.77,
+   1.33,
+   103.875,
+   1.475
+  ],
+  "nodes": 86286,
+  "directed_edges": 137271,
+  "largest_scc_nodes": 78216,
+  "truck_speed": "min(road speed, 70.0) x 0.8",
+  "default_kmh": {
+   "motorway": 90,
+   "trunk": 70,
+   "primary": 60,
+   "secondary": 50,
+   "tertiary": 50,
+   "unclassified": 40,
+   "residential": 30,
+   "living_street": 15,
+   "service": 15
+  }
+ },
+ "max_snap_m": 64.691831,
+ "mean_snap_m": 22.425687,
+ "sources": {
+  "accessed": "2026-11-15",
+  "files": [
+   {
+    "dataset": "d_4dde14826642f49eefff48b7832b90db",
+    "file": "recycling_bins.geojson",
+    "bytes": 19366208,
+    "sha256": "7ae7863774acc9ea9b61d85503263cfde2f24a3f7b7115f8c90fb8e3f464c5b2",
+    "note": "already present"
+   },
+   {
+    "dataset": "d_17f5382f26140b1fdae0ba2ef6239d2f",
+    "file": "hdb_property_information.csv",
+    "bytes": 948464,
+    "sha256": "d528ea2d6fc3f57ab4c8199ed15ea5eaac0109fe659e09ef91910dfe417af2eb",
+    "note": "already present"
+   },
+   {
+    "dataset": "d_4765db0e87b9c86336792efe8a1f7a66",
+    "file": "planning_area_2019.geojson",
+    "bytes": 2092229,
+    "sha256": "f23856251b467089f788d0fff72ef5a38e753f21aa69b4352401d7ed50d380cc",
+    "note": "already present"
+   },
+   {
+    "dataset": "d_4b6f69760d43000af97708ca7367c334",
+    "file": "waste_disposal_site.geojson",
+    "bytes": 6122,
+    "sha256": "27aa5f56add3a8b94836a8191fe3ac823b15beba72ba9446ff57f06b3ab2e44a",
+    "note": "already present"
+   },
+   {
+    "url": "https://download.bbbike.org/osm/bbbike/Singapore/Singapore.osm.pbf",
+    "file": "singapore.osm.pbf",
+    "bytes": 39021601,
+    "sha256": "aa21e2ea72e5e1544d897823465481e98c8ad1d753aaeacfa038909550038e4a"
+   }
+  ]
+ }
+}
