@@ -1,0 +1,6 @@
+# rebuilding the Singapore inputs from the raw downloads (scripts/build_sg_inputs.py)
+osmium==4.3.2
+shapely==2.2.0
+numpy==2.4.6
+pandas==3.1.1
+scipy==1.17.1

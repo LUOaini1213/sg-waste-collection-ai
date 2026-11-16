@@ -1,0 +1,13 @@
+# offline pipeline + tests (Python 3.11); versions used for the committed results
+numpy==2.4.6
+pandas==3.1.1
+scipy==1.17.1
+scikit-learn==1.9.1
+lightgbm==4.7.0
+highspy==1.16.0
+duckdb==2.0.0
+plotly==7.1.0
+matplotlib==3.11.2
+pillow==13.0.0
+onnxruntime==1.32.0
+pytest==9.2.0

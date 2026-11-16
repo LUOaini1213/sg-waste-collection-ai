@@ -40,7 +40,8 @@ class SimConfig:
     days_warmup: int = 14
     days_measured: int = 42                 # six weeks
     start_dow: int = 0                      # day 0 is a Monday
-    base_rate: float = 0.30                 # bin volumes per day for a block with the town-mean dwelling units (ASSUMPTION)
+    base_rate: float = 0.20                 # bin volumes per day for a block with the town-mean dwelling units (ASSUMPTION)
+    units_clip: tuple = (0.5, 2.0)          # per-bin rate = base x clip(units / mean units) (ASSUMPTION)
     dow_factors: tuple = (1.0,) * 7         # weekday shape (ILLUSTRATIVE, from Trnava recyclables bins)
     noise_cv: float = 0.5                   # day-to-day variability of deposits (ILLUSTRATIVE, Trnava)
     sensor_sd: float = 0.03                 # sensor reading noise, fraction of volume (ASSUMPTION)
@@ -132,13 +133,14 @@ def simulate(nodes: dict, dist, time, units: np.ndarray, lon: np.ndarray, cfg: S
     rng = np.random.default_rng(cfg.seed)
     nb = len(units)
     days = cfg.days_warmup + cfg.days_measured
-    mean_rate = cfg.base_rate * units / units.mean()
-    # common random numbers: the same deposits for every policy
+    mean_rate = cfg.base_rate * np.clip(units / units.mean(), *cfg.units_clip)
+    # common random numbers: the same deposits for every policy; rounded so that last-bit
+    # differences of exp/log between C libraries cannot change a decision
     sigma = np.sqrt(np.log(1 + cfg.noise_cv ** 2))
     eps = rng.lognormal(-sigma ** 2 / 2, sigma, size=(days, nb))
     dowf = np.array(cfg.dow_factors) / np.mean(cfg.dow_factors)
-    deposits = np.array([mean_rate * dowf[(cfg.start_dow + d) % 7] for d in range(days)]) * eps
-    sensor_noise = rng.normal(0.0, cfg.sensor_sd, size=(days, nb))
+    deposits = np.round(np.array([mean_rate * dowf[(cfg.start_dow + d) % 7] for d in range(days)]) * eps, 6)
+    sensor_noise = np.round(rng.normal(0.0, cfg.sensor_sd, size=(days, nb)), 6)
     groups = _fixed_groups(lon)
     res = SimResult(asdict(cfg))
     for pol in cfg.policies:
@@ -158,7 +160,7 @@ def simulate(nodes: dict, dist, time, units: np.ndarray, lon: np.ndarray, cfg: S
                     inc = np.array(hist[-cfg.rate_window:]) if hist else np.zeros((1, nb))
                     with np.errstate(invalid="ignore"):
                         cnt = np.sum(~np.isnan(inc), axis=0)
-                        r = np.where(cnt > 0, np.nansum(inc, axis=0) / np.maximum(cnt, 1), mean_rate)
+                        r = np.where(cnt > 0, np.nansum(inc, axis=0) / np.maximum(cnt, 1), 0.0)
                     # deposit days until the next chance to collect (Saturday -> Monday: two)
                     ahead = 2 if dow == 5 else 1
                     h_eff = sum(dowf[(dow + j) % 7] for j in range(ahead))

@@ -121,6 +121,8 @@ def test_parse_kim_format(tmp_path):
     assert inst.time[0, 1] == pytest.approx(262.3, abs=0.05)
     assert inst.ready[0] == 4 * H and inst.due[0] == 15 * H and inst.due[1] == 24 * H
     assert inst.demand.tolist() == [0.0, 0.0, 12.0] and inst.ids == (0, 1, 7)
+    from wastecollect.routing.instance import hhmm_to_seconds
+    assert hhmm_to_seconds(1445) == 14 * H + 45 * 60 and hhmm_to_seconds("0730") == 7.5 * H
     tabbed = KIM_SAMPLE.replace("280.0 \t\t\t\t// vehicle capacity (yards), real number",
                                 '280\t//\tvehicle\tcapacity\t"(yards),"\treal\tnumber')
     p.write_text(tabbed, encoding="utf-8")
@@ -256,3 +258,15 @@ def test_mip_optimum_checked_and_matched_by_alns(seed):
     best, _ = solve(inst, 200, 1)
     assert best.distance() >= res["objective"] - 1e-6
     assert best.distance() == pytest.approx(res["objective"], abs=1e-6)
+
+
+def test_alns_reaches_proven_optimum_on_five_customer_case():
+    """Regression: with only ceil(0.4 n) = 2 removals per iteration ALNS stalled at 50.52 / 50.76 here.
+
+    50.062357 is the HiGHS optimum (results/routing_mip.json, instance syn0-5).
+    """
+    inst = synthetic(0, n_customers=5, n_facilities=2, capacity=20.0)
+    for seed in (1, 2, 3, 4, 5):
+        best, _ = solve(inst, 300, seed)
+        ev = evaluate(inst, best.as_lists())
+        assert ev.feasible and ev.distance == pytest.approx(50.062357, abs=1e-5), seed

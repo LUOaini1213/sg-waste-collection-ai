@@ -1,0 +1,10 @@
+# image-model training, ONNX export and INT8 quantisation
+# (scripts/train_edge_model.py, scripts/quantize_edge_model.py); torch was the CUDA 12.6 build
+torch==2.7.1
+torchvision==0.22.1
+onnx==1.23.2
+onnxruntime==1.32.0
+numpy==2.4.6
+pandas==3.1.1
+pillow==12.3.0
+matplotlib==3.11.2

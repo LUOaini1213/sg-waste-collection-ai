@@ -308,7 +308,8 @@ def solve(inst, iters: int, seed: int, params: Params | None = None, start: Solu
         repair(ctx, cur, rng, 2, False)
     init_cost = cur.cost(0.0)
     n = inst.n_customers
-    q_hi = max(1, min(params.q_max_abs, int(math.ceil(params.xi * n))))
+    # remove at least min(n, q_min) customers: with fewer, tiny instances cannot regroup their trips
+    q_hi = max(min(n, params.q_min), min(params.q_max_abs, int(math.ceil(params.xi * n))), 1)
     q_lo = min(params.q_min, q_hi)
     cur_cost = cur.cost(ctx.penalty)
     best = cur.copy()

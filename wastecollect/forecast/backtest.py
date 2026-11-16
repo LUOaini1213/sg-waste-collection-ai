@@ -98,7 +98,7 @@ def build_samples(P, inc):
     y, coll, stale = P["y"], P["coll"], P["stale"]
     nb, nd = y.shape
     days = pd.to_datetime(P["days"])
-    dow = days.dayofweek.to_numpy()
+    dow = days.day_of_week.to_numpy()
     rows = []
     type_code = np.array([TYPES.index(t) if t in TYPES else len(TYPES) - 1 for t in P["type"]])
     last_coll = np.full(nb, -999)
