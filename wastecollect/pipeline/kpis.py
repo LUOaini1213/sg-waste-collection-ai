@@ -20,13 +20,14 @@ def run_kpis(raw: dict) -> dict:
     """raw: name -> DataFrame for daily_ops, sim_meta, fill_levels, fill_bins, forecast_metrics, routing."""
     import duckdb
     con = duckdb.connect()
+    con.execute("SET threads TO 1")  # single-threaded aggregation: same floating-point sums on every run
     try:
         for name, df in raw.items():
             con.register(f"{name}_df", df)
             con.execute(f"CREATE TABLE {name} AS SELECT * FROM {name}_df")
         for st in statements(SQL.read_text(encoding="utf-8")):
             con.execute(st)
-        return {t: con.execute(f"SELECT * FROM {t}").df() for t in TABLES}
+        return {t: con.execute(f"SELECT * FROM {t}").df().round(6) for t in TABLES}
     finally:
         con.close()
 

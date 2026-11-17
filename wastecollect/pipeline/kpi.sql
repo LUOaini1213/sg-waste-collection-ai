@@ -1,6 +1,6 @@
 -- KPI tables (DuckDB). Raw tables are registered by wastecollect/pipeline/kpis.py:
 --   daily_ops(scenario, seed, policy, day, dow, bins, load, routes, unloads, km, feasible,
---             overflow_bins, overflow_volume, mean_fill_at_collection)
+--             overflow_bins, overflow_volume, mean_fill_at_collection, work_hours)
 --   sim_meta(warmup_days, co2_kg_per_km)
 --   fill_levels(bin, date, eod, max, mean, changes, coll, stale), fill_bins(bin, waste_type, ...)
 --   forecast_metrics(method, horizon, mae, rmse, bias, n)
@@ -17,6 +17,7 @@ WITH per_seed AS (
            SUM(d.overflow_bins)                   AS overflow_bin_days,
            SUM(d.overflow_volume)                 AS overflow_volume,
            SUM(d.load)                            AS loads_collected,
+           SUM(d.work_hours)                      AS work_hours,
            SUM(d.km) * MAX(m.co2_kg_per_km)       AS co2_kg,
            BOOL_AND(d.feasible)                   AS all_feasible
     FROM daily_ops d CROSS JOIN sim_meta m
@@ -26,7 +27,7 @@ WITH per_seed AS (
     SELECT scenario, policy, COUNT(*) AS seeds,
            AVG(km) AS km, AVG(lifts) AS lifts, AVG(truck_shifts) AS truck_shifts,
            MAX(max_trucks_per_day) AS max_trucks_per_day, AVG(overflow_bin_days) AS overflow_bin_days,
-           AVG(overflow_volume) AS overflow_volume, AVG(loads_collected) AS loads_collected,
+           AVG(overflow_volume) AS overflow_volume, AVG(loads_collected) AS loads_collected, AVG(work_hours) AS work_hours,
            AVG(co2_kg) AS co2_kg, BOOL_AND(all_feasible) AS all_feasible
     FROM per_seed GROUP BY scenario, policy
 )
@@ -35,6 +36,7 @@ SELECT a.*,
        a.loads_collected / NULLIF(a.lifts, 0)          AS mean_fill_at_lift,
        100.0 * (a.km - f.km) / NULLIF(f.km, 0)         AS km_change_pct,
        100.0 * (a.lifts - f.lifts) / NULLIF(f.lifts, 0) AS lifts_change_pct,
+       100.0 * (a.work_hours - f.work_hours) / NULLIF(f.work_hours, 0) AS hours_change_pct,
        100.0 * (a.overflow_bin_days - f.overflow_bin_days) / NULLIF(f.overflow_bin_days, 0) AS overflow_change_pct,
        100.0 * (a.co2_kg - f.co2_kg) / NULLIF(f.co2_kg, 0) AS co2_change_pct
 FROM agg a JOIN agg f ON f.scenario = a.scenario AND f.policy = 'fixed'

@@ -87,7 +87,56 @@ def summarise() -> dict:
            "machine": {"python": platform.python_version(), "platform": platform.platform()},
            "note": ref["not_verified"]}
     write_json(ROOT / "results" / "routing_benchmark.json", out)
+    figures(out)
     return out
+
+
+def figures(out: dict) -> None:
+    import numpy as np
+    from wastecollect import plotstyle as ps
+    import matplotlib.pyplot as plt
+    ps.apply()
+    rows = out["rows"]
+    if not rows:
+        return
+    x = np.arange(len(rows))
+    fig, ax = plt.subplots(figsize=(8.2, 3.4))
+    ax.bar(x - 0.2, [r["gap_best_pct"] for r in rows], 0.38, color=ps.SERIES[0], label="Best of 3 seeds")
+    ax.bar(x + 0.2, [r["gap_mean_pct"] for r in rows], 0.38, color=ps.SERIES[1], label="Mean of 3 seeds")
+    for k, r in enumerate(rows):
+        ax.text(k - 0.2, r["gap_best_pct"] + (0.25 if r["gap_best_pct"] >= 0 else -0.25), f"{r['gap_best_pct']:+.1f}",
+                ha="center", va="bottom" if r["gap_best_pct"] >= 0 else "top", fontsize=8, color=ps.INK2)
+    ax.axhline(0, color=ps.AXIS, lw=1)
+    ax.set_xticks(x, [f"{r['instance']}" for r in rows])
+    ax.set_xlabel("Instance (number of stops in the file)")
+    ax.set_ylabel("Gap to lowest published distance (%)")
+    ax.set_title("ALNS vs published results, Kim et al. (2006) waste-collection instances", loc="left")
+    ax.legend(fontsize=8, loc="upper left")
+    ps.save(fig, ROOT / "figures" / "routing_gap.png")
+    path = DATA / "102_stop.txt"
+    run = RUNS / "102_s1.json"
+    if not (path.exists() and run.exists()):
+        return
+    from wastecollect.routing.instance import FACILITY, parse_kim
+    inst = parse_kim(path)
+    best = min((read_json(p) for p in sorted(RUNS.glob("102_s*.json"))), key=lambda r: (r["distance"], r["seed"]))
+    pos = {sid: k for k, sid in enumerate(inst.ids)}
+    fig, ax = plt.subplots(figsize=(6.4, 4.6))
+    for k, route in enumerate(best["routes_stop_ids"]):
+        idx = [pos[s] for s in route]
+        xs, ys = inst.x[idx] / 5280.0, inst.y[idx] / 5280.0
+        ax.step(xs, ys, where="post", color=ps.SERIES[k % 8], lw=1.2, label=f"Route {k + 1}")
+        ax.plot(xs[1:-1], ys[1:-1], ls="none", marker="o", ms=3.5, color=ps.SERIES[k % 8])
+    fac = inst.kind == FACILITY
+    ax.plot(inst.x[fac] / 5280.0, inst.y[fac] / 5280.0, ls="none", marker="s", ms=9, color=ps.INK, label="Disposal facility")
+    ax.plot(inst.x[0] / 5280.0, inst.y[0] / 5280.0, ls="none", marker="*", ms=14, color=ps.INK2, label="Depot")
+    ax.set_aspect("equal")
+    ax.ticklabel_format(useOffset=False, style="plain")
+    ax.set_xlabel("x (miles)")
+    ax.set_ylabel("y (miles)")
+    ax.set_title(f"Instance 102: best ALNS run, {best['distance']:.1f} miles, {best['n_routes']} routes (Manhattan legs)", loc="left")
+    ax.legend(fontsize=8, loc="best")
+    ps.save(fig, ROOT / "figures" / "routing_102_routes.png")
 
 
 def main(argv=None) -> int:
@@ -97,7 +146,7 @@ def main(argv=None) -> int:
     ap.add_argument("--iters", type=int, default=DEFAULT_ITERS)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--summary-only", action="store_true")
-    ap.add_argument("--skip-existing", action="store_true", help="keep run files already written (resume)")
+    ap.add_argument("--skip-existing", action="store_true", help="keep run files already written (continue an interrupted run)")
     args = ap.parse_args(argv)
     if not args.summary_only:
         missing = [n for n in args.instances if not (DATA / f"{n}_stop.txt").exists()]

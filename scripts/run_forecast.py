@@ -98,11 +98,11 @@ def figures(res: dict, pred: pd.DataFrame) -> None:
                 label=f"{ps.METHOD_LABEL[m]} (1 day ahead)")
     cd = s[s["coll"] > 0]["date"]
     for d in cd:
-        ax.axvline(d, color=ps.GRID, lw=1.0, zorder=0)
+        ax.axvline(d, color=ps.MUTED, lw=0.9, ls=":", zorder=0)
     ax.set_ylabel("Fill level (%)")
     ax.set_ylim(0, 105)
     wt = TYPES[int(pred.loc[pred["bin"] == b, "type"].iloc[0])]
-    ax.set_title(f"Example {wt} bin (id {b}); grey lines mark logged collections", loc="left")
+    ax.set_title(f"Example {wt} bin (id {b}); dotted lines mark logged collections", loc="left")
     ax.legend(fontsize=8, loc="upper left", ncol=3)
     fig.autofmt_xdate()
     ps.save(fig, ROOT / "figures" / "forecast_example_bin.png")

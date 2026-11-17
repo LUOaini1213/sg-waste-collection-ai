@@ -83,6 +83,31 @@ def test_committed_models_match_results_and_size_limit():
         correct = sum(m["confusion"][k][k] for k in range(len(CLASSES)))
         assert m["accuracy"] == pytest.approx(correct / res["test_images"], abs=1e-6)
     assert res["models"]["int8"]["bytes"] < 0.5 * res["models"]["fp32"]["bytes"]
+    # the selection was made on validation data and is recorded: sensitive blocks are exactly those
+    # whose solo quantisation lost more than the threshold
+    s = res["selection_on_validation"]
+    want = [b for b, acc in s["block_scan"].items() if s["fp32"] - acc > s["sensitivity_threshold"]]
+    assert s["sensitive_blocks"] == want and 0 < s["weight_nodes_quantised"] < s["weight_nodes_total"]
+    assert res["models"]["int8_full"]["file"] is None and s["full_int8_best"] in s["full_int8"]
+
+
+def test_committed_int8_model_is_mixed_precision():
+    onnx = pytest.importorskip("onnx")
+    res = json.loads((ROOT / "results" / "edge_model.json").read_text(encoding="utf-8"))
+    s = res["selection_on_validation"]
+    model = onnx.load(str(ROOT / "models" / "trashnet_mnv3s_int8.onnx"))
+    ops = [n.op_type for n in model.graph.node]
+    assert "QuantizeLinear" in ops and "DequantizeLinear" in ops
+    inits = {i.name: i for i in model.graph.initializer}
+    weights = [n for n in model.graph.node if n.op_type in ("Conv", "Gemm")]
+    assert len(weights) == s["weight_nodes_total"]
+    # a weight node is quantised when its weight input comes from a DequantizeLinear node
+    dq_out = {o for n in model.graph.node if n.op_type == "DequantizeLinear" for o in n.output}
+    quantised = [n for n in weights if n.input[1] in dq_out]
+    assert len(quantised) == s["weight_nodes_quantised"]
+    for n in weights:
+        if n.input[1] not in dq_out:
+            assert n.input[1] in inits and any(n.name.startswith(f"/features/{b}/") for b in s["sensitive_blocks"]), n.name
 
 
 def test_onnx_models_reproduce_reference_outputs():

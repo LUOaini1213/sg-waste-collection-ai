@@ -419,18 +419,6 @@ def drop_empty_trips(inst, nodes):
     return out
 
 
-def tidy(inst, route: Route) -> Route:
-    """Drop empty trips and merge consecutive trips whose loads fit; keep only feasible changes."""
-    nodes = drop_empty_trips(inst, route.nodes)
-    if nodes != route.nodes:
-        cand = Route(inst, nodes)
-        if not cand.feasible(inst) and route.feasible(inst):
-            cand = route
-    else:
-        cand = route
-    return merge_trips(inst, cand)
-
-
 def merge_trips(inst, route: Route) -> Route:
     kind = inst.kind
     changed = True

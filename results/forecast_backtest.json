@@ -8,7 +8,7 @@
   "learning_rate": 0.05,
   "num_leaves": 31,
   "min_child_samples": 50,
-  "threads": 2,
+  "threads": 1,
   "seed": 0,
   "full_threshold": 80.0
  },

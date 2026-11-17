@@ -72,8 +72,8 @@ THEME_JS = """
 
 
 def _layout(fig, title, ytitle=None, height=340):
-    fig.update_layout(title=dict(text=title, x=0.01, xanchor="left", font=dict(size=14)), height=height,
-                      margin=dict(l=56, r=16, t=48, b=48), paper_bgcolor="rgba(0,0,0,0)",
+    fig.update_layout(title=dict(text=title, x=0.01, xanchor="left", y=0.97, yanchor="top", font=dict(size=14)), height=height,
+                      margin=dict(l=56, r=16, t=72, b=48), paper_bgcolor="rgba(0,0,0,0)",
                       plot_bgcolor="rgba(0,0,0,0)", font=dict(family="system-ui, Segoe UI, sans-serif", size=12,
                                                               color="#52514e"),
                       legend=dict(orientation="h", yanchor="bottom", y=1.0, x=0.01, font=dict(size=11)),
@@ -114,7 +114,8 @@ def build(root: Path, kpi: dict) -> str:
         ("Bin lifts, forecast vs fixed", f"{f['lifts_change_pct']:+.1f}%", f"{f['lifts']:.0f} vs {base.loc['fixed', 'lifts']:.0f} lifts"),
         ("Overflow bin-days, forecast vs fixed", f"{f['overflow_change_pct']:+.1f}%",
          f"{f['overflow_bin_days']:.0f} vs {base.loc['fixed', 'overflow_bin_days']:.0f}"),
-        ("CO2 (DESNZ per-km factor)", f"{f['co2_kg'] / 1000:.2f} t", f"fixed schedule: {base.loc['fixed', 'co2_kg'] / 1000:.2f} t"),
+        ("Crew hours, forecast vs fixed", f"{f['hours_change_pct']:+.1f}%", f"{f['work_hours']:.0f} vs {base.loc['fixed', 'work_hours']:.0f} h (driving, lifting, unloading)"),
+        ("CO2e, forecast-based policy", f"{f['co2_kg'] / 1000:.2f} t", f"fixed schedule: {base.loc['fixed', 'co2_kg'] / 1000:.2f} t (per-km factor)"),
     ]:
         tiles.append(f'<div class="tile"><div class="label">{html.escape(label)}</div><div class="value">{html.escape(val)}</div>'
                      f'<div class="sub">{html.escape(sub)}</div></div>')
@@ -126,7 +127,7 @@ def build(root: Path, kpi: dict) -> str:
     figs = []
     for metric, title, ytitle in [("km", "Truck km per scenario (6 weeks)", "km"),
                                   ("overflow_bin_days", "Overflow bin-days per scenario", "bin-days"),
-                                  ("lifts", "Bin lifts per scenario", "lifts")]:
+                                  ("work_hours", "Crew hours per scenario", "hours")]:
         fig = go.Figure()
         for p in ("fixed", "threshold", "forecast"):
             sub = pol[pol["policy"] == p]
@@ -135,7 +136,8 @@ def build(root: Path, kpi: dict) -> str:
         figs.append(_html(_layout(fig, title, ytitle), f"scen-{metric}"))
     parts.append("<h2>Collect when needed vs fixed schedule</h2>")
     parts.append('<div class="card">' + figs[0] + "</div>")
-    parts.append('<div class="grid2"><div class="card">' + figs[1] + '</div><div class="card">' + figs[2] + "</div></div>")
+    parts.append('<div class="card">' + figs[1] + "</div>")
+    parts.append('<div class="card">' + figs[2] + "</div>")
     wk = kpi["kpi_weekly"]
     wk = wk[wk["scenario"] == "base"]
     fig = go.Figure()
@@ -191,9 +193,9 @@ def build(root: Path, kpi: dict) -> str:
     if em.exists():
         e = json.loads(em.read_text(encoding="utf-8"))
         rows = []
-        for name in ("fp32", "int8"):
+        for name, lab in (("fp32", "FP32"), ("int8_full", "INT8, every operator"), ("int8", "INT8, mixed precision")):
             m = e["models"][name]
-            rows.append({"model": name.upper(), "accuracy": m["accuracy"], "macro F1": m["macro_f1"], "size (MB)": m["bytes"] / 1e6,
+            rows.append({"model": lab, "accuracy": m["accuracy"], "macro F1": m["macro_f1"], "size (MB)": m["bytes"] / 1e6,
                          "p50 ms (1 thread)": m["latency_1_thread"]["p50_ms"], "p95 ms (1 thread)": m["latency_1_thread"]["p95_ms"],
                          "p50 ms (4 threads)": m["latency_4_threads"]["p50_ms"]})
         parts.append("<h2>Waste-image classifier, FP32 vs INT8</h2>")

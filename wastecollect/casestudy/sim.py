@@ -74,6 +74,7 @@ class DayLog:
     overflow_bins: int
     overflow_volume: float
     mean_fill_at_collection: float
+    work_hours: float = 0.0   # driving + lifting + unloading time of the day's routes (break excluded)
 
 
 @dataclass
@@ -96,6 +97,7 @@ class SimResult:
                 "unloads": sum(d.unloads for d in rows),
                 "overflow_bin_days": sum(d.overflow_bins for d in rows),
                 "overflow_volume": sum(d.overflow_volume for d in rows),
+                "work_hours": sum(d.work_hours for d in rows),
                 "mean_fill_at_collection": (sum(d.mean_fill_at_collection * d.bins for d in rows) / lifts) if lifts else 0.0,
                 "co2_kg": km * self.config["co2_kg_per_km"],
                 "all_routes_feasible": all(d.feasible for d in rows),
@@ -167,7 +169,7 @@ def simulate(nodes: dict, dist, time, units: np.ndarray, lon: np.ndarray, cfg: S
                     sel = (reading + r * h_eff >= cfg.forecast_level) | (d - last_coll >= cfg.max_gap_days)
             amounts = np.minimum(level[sel], 1.0)
             day_bins = np.flatnonzero(sel)
-            km = 0.0
+            km = hours = 0.0
             routes = unloads = 0
             feasible = True
             if len(day_bins) and d >= cfg.days_warmup:
@@ -175,6 +177,9 @@ def simulate(nodes: dict, dist, time, units: np.ndarray, lon: np.ndarray, cfg: S
                 sol, _ = solve(inst, cfg.alns_iters, cfg.seed * 1000 + d, Params())
                 ev = evaluate(inst, sol.as_lists())
                 km, routes, unloads, feasible = ev.distance, ev.n_routes, ev.n_unloads, ev.feasible
+                lists = sol.as_lists()
+                drive = sum(float(inst.time[a, b]) for r in lists for a, b in zip(r[:-1], r[1:]))
+                hours = (drive + sum(float(inst.service[v]) for r in lists for v in r)) / H
             fill_at_coll = float(level[sel].mean()) if sel.any() else 0.0
             level[sel] = 0.0
             last_coll[sel] = d
@@ -188,5 +193,5 @@ def simulate(nodes: dict, dist, time, units: np.ndarray, lon: np.ndarray, cfg: S
             hist.append(inc_obs)
             reading = new_reading
             res.days.append(DayLog(pol, d, dow, int(sel.sum()), float(amounts.sum()), routes, unloads, km,
-                                   feasible, n_over, float(over.sum()), fill_at_coll))
+                                   feasible, n_over, float(over.sum()), fill_at_coll, hours))
     return res

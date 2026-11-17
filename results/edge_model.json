@@ -1,0 +1,324 @@
+{
+ "test_images": 430,
+ "validation_images": 328,
+ "calibration_images": 300,
+ "classes": [
+  "cardboard",
+  "glass",
+  "metal",
+  "paper",
+  "plastic",
+  "trash"
+ ],
+ "onnxruntime": "1.32.0",
+ "cpu": "11th Gen Intel(R) Core(TM) i7-11370H @ 3.30GHz",
+ "python": "3.11.5",
+ "edge_hardware_tested": false,
+ "selection_on_validation": {
+  "fp32": 0.945122,
+  "full_int8": {
+   "minmax": 0.304878,
+   "percentile": 0.39939,
+   "entropy": 0.304878
+  },
+  "full_int8_best": "percentile",
+  "block_scan": {
+   "features.0": 0.271341,
+   "features.1": 0.393293,
+   "features.2": 0.70122,
+   "features.3": 0.942073,
+   "features.4": 0.939024,
+   "features.5": 0.935976,
+   "features.6": 0.939024,
+   "features.7": 0.939024,
+   "features.8": 0.939024,
+   "features.9": 0.935976,
+   "features.10": 0.942073,
+   "features.11": 0.945122,
+   "features.12": 0.945122,
+   "classifier": 0.945122
+  },
+  "sensitivity_threshold": 0.02,
+  "sensitive_blocks": [
+   "features.0",
+   "features.1",
+   "features.2"
+  ],
+  "weight_nodes_total": 54,
+  "weight_nodes_quantised": 46,
+  "mixed_int8": 0.926829
+ },
+ "models": {
+  "fp32": {
+   "file": "models/trashnet_mnv3s_fp32.onnx",
+   "bytes": 6105646,
+   "sha256": "48c2f3e567bdc151e1a66bd636b2c71a03b33d178358807283c9dcf2cbfb9847",
+   "accuracy": 0.934884,
+   "macro_f1": 0.922958,
+   "per_class_recall": {
+    "cardboard": 0.942029,
+    "glass": 0.905882,
+    "metal": 0.942857,
+    "paper": 0.960396,
+    "plastic": 0.963415,
+    "trash": 0.782609
+   },
+   "confusion": [
+    [
+     65,
+     0,
+     1,
+     3,
+     0,
+     0
+    ],
+    [
+     0,
+     77,
+     1,
+     0,
+     7,
+     0
+    ],
+    [
+     0,
+     3,
+     66,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     1,
+     0,
+     97,
+     0,
+     2
+    ],
+    [
+     0,
+     1,
+     1,
+     1,
+     79,
+     0
+    ],
+    [
+     1,
+     0,
+     1,
+     1,
+     2,
+     18
+    ]
+   ],
+   "latency_1_thread": {
+    "p50_ms": 3.13115,
+    "p95_ms": 4.77228,
+    "mean_ms": 3.210458,
+    "runs": 300,
+    "rounds": 3,
+    "round_p50_ms": [
+     3.13115,
+     3.3422,
+     3.3409
+    ]
+   },
+   "latency_4_threads": {
+    "p50_ms": 1.79105,
+    "p95_ms": 10.66857,
+    "mean_ms": 3.420796,
+    "runs": 300,
+    "rounds": 3,
+    "round_p50_ms": [
+     1.8611,
+     1.8663,
+     1.79105
+    ]
+   }
+  },
+  "int8_full": {
+   "file": null,
+   "bytes": 1873088,
+   "sha256": "eaf3a6f8325633bf956c465bf0662dc1ce73def627f66a70c723ec26bf168817",
+   "accuracy": 0.37907,
+   "macro_f1": 0.315877,
+   "per_class_recall": {
+    "cardboard": 0.42029,
+    "glass": 0.0,
+    "metal": 0.685714,
+    "paper": 0.683168,
+    "plastic": 0.0,
+    "trash": 0.73913
+   },
+   "confusion": [
+    [
+     29,
+     0,
+     5,
+     8,
+     0,
+     27
+    ],
+    [
+     4,
+     0,
+     17,
+     20,
+     0,
+     44
+    ],
+    [
+     1,
+     0,
+     48,
+     4,
+     0,
+     17
+    ],
+    [
+     3,
+     0,
+     0,
+     69,
+     0,
+     29
+    ],
+    [
+     0,
+     0,
+     38,
+     10,
+     0,
+     34
+    ],
+    [
+     1,
+     0,
+     2,
+     3,
+     0,
+     17
+    ]
+   ],
+   "latency_1_thread": {
+    "p50_ms": 3.01905,
+    "p95_ms": 4.707165,
+    "mean_ms": 3.314207,
+    "runs": 300,
+    "rounds": 3,
+    "round_p50_ms": [
+     3.0398,
+     3.73995,
+     3.01905
+    ]
+   },
+   "latency_4_threads": {
+    "p50_ms": 2.52655,
+    "p95_ms": 3.21234,
+    "mean_ms": 2.540045,
+    "runs": 300,
+    "rounds": 3,
+    "round_p50_ms": [
+     2.52655,
+     2.6481,
+     2.5696
+    ]
+   },
+   "description": "every supported operator in INT8, percentile calibration (not committed)"
+  },
+  "int8": {
+   "file": "models/trashnet_mnv3s_int8.onnx",
+   "bytes": 1848812,
+   "sha256": "53bb5d65683e0bb93def7a9d6e7945505f46d7037681a9dea60efbbe1a5bb092",
+   "accuracy": 0.927907,
+   "macro_f1": 0.91119,
+   "per_class_recall": {
+    "cardboard": 0.956522,
+    "glass": 0.882353,
+    "metal": 0.957143,
+    "paper": 0.940594,
+    "plastic": 0.95122,
+    "trash": 0.782609
+   },
+   "confusion": [
+    [
+     66,
+     0,
+     1,
+     2,
+     0,
+     0
+    ],
+    [
+     0,
+     75,
+     2,
+     1,
+     6,
+     1
+    ],
+    [
+     0,
+     2,
+     67,
+     1,
+     0,
+     0
+    ],
+    [
+     1,
+     1,
+     0,
+     95,
+     0,
+     4
+    ],
+    [
+     0,
+     2,
+     1,
+     1,
+     78,
+     0
+    ],
+    [
+     1,
+     1,
+     2,
+     1,
+     0,
+     18
+    ]
+   ],
+   "latency_1_thread": {
+    "p50_ms": 2.30425,
+    "p95_ms": 3.716315,
+    "mean_ms": 2.557678,
+    "runs": 300,
+    "rounds": 3,
+    "round_p50_ms": [
+     2.4578,
+     2.30425,
+     2.3289
+    ]
+   },
+   "latency_4_threads": {
+    "p50_ms": 2.47665,
+    "p95_ms": 3.02109,
+    "mean_ms": 2.443703,
+    "runs": 300,
+    "rounds": 3,
+    "round_p50_ms": [
+     2.47665,
+     2.61835,
+     2.50875
+    ]
+   },
+   "description": "mixed precision: Conv/Gemm of non-sensitive blocks in INT8, the rest FP32"
+  }
+ },
+ "int8_fp32_prediction_agreement": 0.969767,
+ "size_ratio_int8_over_fp32": 0.302804
+}

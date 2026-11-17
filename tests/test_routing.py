@@ -270,3 +270,25 @@ def test_alns_reaches_proven_optimum_on_five_customer_case():
         best, _ = solve(inst, 300, seed)
         ev = evaluate(inst, best.as_lists())
         assert ev.feasible and ev.distance == pytest.approx(50.062357, abs=1e-5), seed
+
+
+def test_mip_allows_as_many_unloads_as_an_optimum_may_need():
+    """Regression: a fixed cap of four copies per facility cut off optima with five unloads at one facility."""
+    from wastecollect.routing.mip import solve_mip, unload_bound
+    xs = np.array([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+    dist = np.abs(xs[:, None] - xs[None, :])
+    n = len(xs)
+    inst = Instance("five-unloads", np.array([DEPOT, FACILITY] + [CUSTOMER] * 5), ready=np.zeros(n), due=np.full(n, 24 * H),
+                    service=np.zeros(n), demand=np.array([0, 0, 13, 13, 13, 13, 13.0]), dist=dist, time=dist * 60.0,
+                    capacity=20.0, rest=None)
+    assert unload_bound(inst, 1) == 5            # min(5 customers, 2 * floor(65 / 20) + 1 = 7)
+    assert unload_bound(inst.with_rest(None), 3) == 5
+    assert unload_bound(line_instance(capacity=12.0), 2) == 2   # 12 collected: min(2 customers, 2 * 1 + 2)
+    res = solve_mip(inst, n_vehicles=1, time_limit=120)
+    assert res["optimal"] and res["copies"] == 5
+    # every stop needs its own trip: 2 (x - 1) per stop from the facility, +1 for leaving the depot, +1 to return
+    assert res["objective"] == pytest.approx(2 * (1 + 2 + 3 + 4 + 5) + 2)
+    ev = evaluate(inst, res["routes"])
+    assert ev.feasible and ev.n_unloads == 5 and ev.n_routes == 1
+    best, _ = solve(inst, 100, 1)
+    assert best.distance() == pytest.approx(32.0)

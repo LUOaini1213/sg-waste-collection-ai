@@ -1,0 +1,13 @@
+method,horizon,mae,rmse,bias,n,best_in_horizon
+lightgbm,1,6.84001,9.77519,0.610344,58971,True
+mean_rate,1,7.73618,11.0169,-0.217417,58971,False
+seasonal_naive,1,9.84199,13.8685,-0.296767,58971,False
+persistence,1,10.6835,15.2922,-8.88067,58971,False
+lightgbm,2,7.13195,10.1589,0.803441,47515,True
+mean_rate,2,8.60422,12.1438,0.468635,47515,False
+seasonal_naive,2,10.7757,15.118,0.273219,47515,False
+persistence,2,16.0916,21.9731,-15.0658,47515,False
+lightgbm,3,7.0426,10.0487,0.850925,37984,True
+mean_rate,3,9.0069,12.7581,1.17185,37984,False
+seasonal_naive,3,10.904,15.3649,0.918053,37984,False
+persistence,3,19.6251,26.6392,-18.8663,37984,False

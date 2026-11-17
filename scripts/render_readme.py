@@ -47,7 +47,7 @@ def block_routing() -> str:
     avg = lambda rows, k: sum(x[k] for x in rows) / len(rows)  # noqa: E731
     n_seeds = len(r["rows"][0]["seeds"])
     out.append("")
-    out.append(f"Distances in miles; {r['rows'][0]['iters']} ALNS iterations, {n_seeds} seeds per instance; every run passed the "
+    out.append(f"Distances in miles; {r['rows'][0]['iters']:,} ALNS iterations, {n_seeds} seeds per instance; every run passed the "
                f"independent checker ({'yes' if all(x['all_feasible'] for x in r['rows']) else 'NO'}). Gaps are against the lowest "
                "published value that could be read in an accessible source: Markov et al. (2016) for the first five instances, "
                "Benjamin (2011) for the other five.")
@@ -63,18 +63,23 @@ def block_routing() -> str:
 
 def block_mip() -> str:
     m = load("routing_mip.json")
-    out = ["| Group | Instances | MIP proved optimal | MIP routes pass the checker | ALNS = optimum (best of 5 seeds) | ALNS = optimum (all 5 seeds) | ALNS below a proven optimum | Largest ALNS gap |",
-           "|---|---|---|---|---|---|---|---|"]
+    out = ["| Group | Instances | MIP proved optimal | MIP routes pass the checker | ALNS = optimum (best of 5 seeds) | ALNS = optimum (all 5 seeds) | ALNS below a proven optimum | Largest gap, best seed | Largest gap, any seed |",
+           "|---|---|---|---|---|---|---|---|---|"]
     names = {"synthetic": "SYNTHETIC, 5-7 stops, 2 IFs", "kim102": "First 6-10 stops of instance 102 (two capacities)"}
     for g in ("synthetic", "kim102"):
         rows = m.get(g, [])
         if not rows:
             continue
         opt = [x for x in rows if x["mip_optimal"]]
-        gap = max((x["alns_gap_pct"] for x in opt), default=0.0)
+        gap = abs(max((x["alns_gap_pct"] for x in opt), default=0.0))
+        worst = abs(max((x["alns_worst_seed_gap_pct"] for x in opt), default=0.0))
         out.append(f"| {names[g]} | {len(rows)} | {len(opt)} | {sum(x['mip_routes_checked'] for x in rows)} | "
                    f"{sum(x['alns_hits_optimum_any'] for x in opt)}/{len(opt)} | {sum(x['alns_hits_optimum_all'] for x in opt)}/{len(opt)} | "
-                   f"{sum(x['alns_below_proven_optimum'] for x in opt)} | {gap:.3f} % |")
+                   f"{sum(x['alns_below_proven_optimum'] for x in opt)} | {gap:.2f} % | {worst:.2f} % |")
+    lim = [x for g in ("synthetic", "kim102") for x in m.get(g, []) if not x["mip_optimal"]]
+    if lim:
+        out += ["", "Not proved optimal within the time limit (ALNS compared with the MIP's best solution instead): "
+                + ", ".join(f"{x['instance']} (MIP {x['mip_objective']:.3f}, bound {x['mip_bound']:.3f}, ALNS {x['alns_best']:.3f})" for x in lim) + "."]
     return "\n".join(out)
 
 
@@ -106,14 +111,14 @@ def block_forecast() -> str:
 
 def block_casestudy() -> str:
     c = load("casestudy.json")
-    out = ["| Scenario | Policy | Truck km | Bin lifts | Truck shifts | Max trucks/day | Overflow bin-days | Mean fill at lift | CO2e (kg) | km vs fixed | Lifts vs fixed | Overflow vs fixed |",
-           "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    out = ["| Scenario | Policy | Truck km | Bin lifts | Crew hours | Truck shifts | Max trucks/day | Overflow bin-days | Mean fill at lift | CO2e (kg) | km vs fixed | Lifts vs fixed | Hours vs fixed | Overflow vs fixed |",
+           "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for name, sc in c["scenarios"].items():
         for p in ("fixed", "threshold", "forecast"):
             v = sc["policies"][p]
             ch = sc["change_vs_fixed_pct"].get(p)
-            cells = [pct(ch["km"]), pct(ch["lifts"]), pct(ch["overflow_bin_days"])] if ch else ["-", "-", "-"]
-            out.append(f"| {SCEN.get(name, name) if p == 'fixed' else ''} | {POLICY[p]} | {v['km']['mean']:.0f} | {v['lifts']['mean']:.0f} | "
+            cells = [pct(ch["km"]), pct(ch["lifts"]), pct(ch["work_hours"]), pct(ch["overflow_bin_days"])] if ch else ["-", "-", "-", "-"]
+            out.append(f"| {SCEN.get(name, name) if p == 'fixed' else ''} | {POLICY[p]} | {v['km']['mean']:.0f} | {v['lifts']['mean']:.0f} | {v['work_hours']['mean']:.0f} | "
                        f"{v['truck_days']['mean']:.1f} | {v['max_trucks_per_day']['max']:.0f} | {v['overflow_bin_days']['mean']:.0f} | "
                        f"{v['mean_fill_at_collection']['mean']:.2f} | {v['co2_kg']['mean']:.0f} | {' | '.join(cells)} |")
     base = c["scenarios"]["base"]["policies"]
@@ -129,20 +134,35 @@ def block_casestudy() -> str:
 def block_edge() -> str:
     e = load("edge_model.json")
     t = load("edge_training.json")
+    s = e["selection_on_validation"]
+    label = {"fp32": "FP32", "int8_full": "INT8, every operator (not committed)", "int8": "INT8, mixed precision (committed)"}
     out = ["| Model | Test accuracy | Macro F1 | File size | p50 / p95 latency, 1 thread | p50 / p95 latency, 4 threads |", "|---|---|---|---|---|---|"]
-    for k in ("fp32", "int8"):
+    for k in ("fp32", "int8_full", "int8"):
         m = e["models"][k]
-        out.append(f"| {k.upper()} | {m['accuracy']:.1%} | {m['macro_f1']:.3f} | {m['bytes'] / 1e6:.2f} MB | "
+        out.append(f"| {label[k]} | {m['accuracy']:.1%} | {m['macro_f1']:.3f} | {m['bytes'] / 1e6:.2f} MB | "
                    f"{m['latency_1_thread']['p50_ms']:.1f} / {m['latency_1_thread']['p95_ms']:.1f} ms | "
                    f"{m['latency_4_threads']['p50_ms']:.1f} / {m['latency_4_threads']['p95_ms']:.1f} ms |")
-    f, q = e["models"]["fp32"], e["models"]["int8"]
-    out += ["", f"{e['test_images']} test images (17 % split); INT8 calibrated on {e['calibration_images']} training images. INT8 changes accuracy by "
-            f"{(q['accuracy'] - f['accuracy']) * 100:+.1f} points, is {f['bytes'] / q['bytes']:.1f}x smaller and "
-            f"{f['latency_1_thread']['p50_ms'] / q['latency_1_thread']['p50_ms']:.2f}x the FP32 speed at p50 (1 thread); the two models agree on "
-            f"{e['int8_fp32_prediction_agreement']:.1%} of test images. Per-class recall (FP32 / INT8): "
+    f, q, full = e["models"]["fp32"], e["models"]["int8"], e["models"]["int8_full"]
+    speed = f["latency_1_thread"]["p50_ms"] / q["latency_1_thread"]["p50_ms"]
+    out += ["", f"{e['test_images']} test images; calibration on {e['calibration_images']} training images; every choice below was made on the "
+            f"{e['validation_images']} validation images (FP32 validation accuracy {s['fp32']:.1%}).", "",
+            "- **Quantising every operator fails.** Validation accuracy "
+            + ", ".join(f"{v:.1%} ({k})" for k, v in s["full_int8"].items())
+            + f"; on the test split the best of these reaches {full['accuracy']:.1%}.",
+            "- **Sensitivity scan.** Quantising the convolutions of one block at a time: "
+            + ", ".join(f"{b} {v:.1%}" for b, v in s["block_scan"].items() if b in s["sensitive_blocks"])
+            + f"; every other block stays at {min(v for b, v in s['block_scan'].items() if b not in s['sensitive_blocks']):.1%} or above.",
+            f"- **Mixed precision.** Keeping {', '.join(s['sensitive_blocks'])} and the activation operators in FP32 and quantising "
+            f"{s['weight_nodes_quantised']} of {s['weight_nodes_total']} convolution / linear nodes gives {s['mixed_int8']:.1%} on validation and "
+            f"{q['accuracy']:.1%} on test ({(q['accuracy'] - f['accuracy']) * 100:+.1f} points against FP32), a file {f['bytes'] / q['bytes']:.1f}x smaller, "
+            f"and {'no speed-up' if speed < 1.05 else f'a {speed:.2f}x speed-up'} on this CPU with one thread (p50 {f['latency_1_thread']['p50_ms']:.1f} ms FP32 vs "
+            f"{q['latency_1_thread']['p50_ms']:.1f} ms with one thread; with four threads {f['latency_4_threads']['p50_ms']:.1f} ms vs {q['latency_4_threads']['p50_ms']:.1f} ms). The two models agree on {e['int8_fp32_prediction_agreement']:.1%} of test images.",
+            "", "Per-class recall on test (FP32 / mixed INT8): "
             + ", ".join(f"{c} {f['per_class_recall'][c]:.2f} / {q['per_class_recall'][c]:.2f}" for c in e["classes"]) + ".",
-            f"Latency: ONNX Runtime {e['onnxruntime']}, CPU execution provider, batch 1, on {e['cpu']} (a laptop; **not measured on edge hardware**). "
-            f"Training: {t['epochs']} epochs in {t['train_seconds'] / 60:.0f} min on {t['device']}, best validation accuracy {t['best_val_acc']:.1%} at epoch {t['best_epoch']}."]
+            f"Latency: ONNX Runtime {e['onnxruntime']}, CPU execution provider, batch 1, best of three rounds of 300 runs, on {e['cpu']} "
+            "(a laptop; **not measured on edge hardware**, where integer kernels may behave differently). "
+            f"Training: {t['epochs']} epochs, {t['train_seconds'] / 60:.0f} min wall time on a {t['device']} shared with other jobs; "
+            f"best validation accuracy {t['best_val_acc']:.1%} at epoch {t['best_epoch']}."]
     return "\n".join(out)
 
 
@@ -162,6 +182,13 @@ def block_findings() -> str:
     b = c["scenarios"]["base"]
     ch = b["change_vs_fixed_pct"]["forecast"]
     town = c["scenarios"]["facility_in_town"]["change_vs_fixed_pct"]["forecast"]
+    nbins = json.loads((ROOT / "data" / "inputs" / "sg_casestudy_meta.json").read_text(encoding="utf-8"))["bins_after_dedup"]
+    if ch["lifts"] < -5 and ch["km"] > -1:
+        verdict = "Under these assumptions collecting when needed saves handling, not distance."
+    elif ch["km"] <= -1:
+        verdict = "Under these assumptions collecting when needed saves both handling and distance."
+    else:
+        verdict = "Under these assumptions collecting when needed brings no clear saving."
     fp, q = e["models"]["fp32"], e["models"]["int8"]
     return "\n".join([
         f"- **Routing.** ALNS with unloading trips and a driver break on the ten Kim et al. (2006) instances: best of {len(r['rows'][0]['seeds'])} seeds is "
@@ -169,25 +196,57 @@ def block_findings() -> str:
         f"({pct(avg(r['rows'], 'gap_vs_kim2006_pct'), 1)} against the original 2006 results). It is not state of the art.",
         f"- **Forecasting.** On {f['n_bins']} real smart bins, LightGBM has an MAE of {o['lightgbm']['mae']:.1f} points of fill level against {o[f['best_baseline']]['mae']:.1f} for the best baseline "
         f"({METHOD[f['best_baseline']].lower()}) and {o['persistence']['mae']:.1f} for the last value.",
-        f"- **Singapore case study (simulation).** For Bishan's {int(round(b['policies']['fixed']['lifts']['mean'] / 18))} HDB recycling bins, forecast-based collection needs {pct(ch['lifts'], 0)} bin lifts "
-        f"than the three-times-a-week schedule at {pct(ch['overflow_bin_days'], 0)} overflow bin-days, but truck km change by {pct(ch['km'], 1)} "
-        f"({pct(town['km'], 0)} when the unloading point is in town): the fixed schedule already serves compact zones and distance is driven by the unloading trips.",
-        f"- **Edge classifier.** MobileNetV3-Small on TrashNet: {fp['accuracy']:.1%} test accuracy in FP32, {q['accuracy']:.1%} after INT8 static quantisation, "
-        f"{fp['bytes'] / 1e6:.1f} MB -> {q['bytes'] / 1e6:.1f} MB, CPU p50 latency {fp['latency_1_thread']['p50_ms']:.1f} -> {q['latency_1_thread']['p50_ms']:.1f} ms (laptop CPU, 1 thread; no edge device was used).",
+        f"- **Singapore case study (simulation).** For the {nbins} recycling bins of Bishan's HDB estates, forecast-based collection changes bin lifts by {pct(ch['lifts'], 0)}, "
+        f"crew hours by {pct(ch['work_hours'], 0)}, overflow bin-days by {pct(ch['overflow_bin_days'], 0)} and truck km by {pct(ch['km'], 1)} against the three-times-a-week schedule "
+        f"(truck km {pct(town['km'], 0)} when depot and unloading point are in town). {verdict}",
+        f"- **Edge classifier.** MobileNetV3-Small on TrashNet: {fp['accuracy']:.1%} test accuracy in FP32. Static INT8 quantisation of the whole network "
+        f"collapses to {e['models']['int8_full']['accuracy']:.1%}; a mixed-precision model ({len(e['selection_on_validation']['sensitive_blocks'])} sensitive blocks kept in FP32) reaches {q['accuracy']:.1%} at "
+        f"{fp['bytes'] / 1e6:.1f} MB -> {q['bytes'] / 1e6:.1f} MB, with CPU p50 latency {fp['latency_1_thread']['p50_ms']:.1f} -> {q['latency_1_thread']['p50_ms']:.1f} ms "
+        "(laptop CPU, 1 thread; no edge device was used).",
     ])
 
 
-BLOCKS = {"findings": block_findings, "routing": block_routing, "mip": block_mip, "forecast": block_forecast,
+def block_inputs() -> str:
+    import csv
+    inp = ROOT / "data" / "inputs"
+    meta = json.loads((inp / "sg_casestudy_meta.json").read_text(encoding="utf-8"))
+    with open(inp / "fill_bins.csv", encoding="utf-8") as fh:
+        bins = list(csv.DictReader(fh))
+    days, n, stale, coll = set(), 0, 0, 0
+    with open(inp / "fill_levels_daily.csv", encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            days.add(row["date"])
+            n += 1
+            stale += int(row["stale"])
+            coll += int(row["coll"])
+    types = {}
+    for b in bins:
+        types[b["waste_type"]] = types.get(b["waste_type"], 0) + 1
+    with open(inp / "trashnet_split.csv", encoding="utf-8") as fh:
+        split = list(csv.DictReader(fh))
+    return "\n".join([
+        "Committed inputs (`data/inputs/`):", "",
+        f"- Trnava smart bins: {len(bins)} bins ({', '.join(f'{v} {k}' for k, v in sorted(types.items()))}), {len(days)} days "
+        f"({min(days)} to {max(days)}), {n:,} bin-days, {coll:,} logged collections, {100 * stale / n:.1f} % of bin-days flagged as stale.",
+        f"- Bishan case study: {meta['bins_after_dedup']} recycling bins in HDB estates, {meta['bins_matched_to_hdb_block']} matched to an HDB block "
+        f"({meta['town_bins_dwelling_units_total']:,} dwelling units in total), a {meta['bins_after_dedup'] + 2} x {meta['bins_after_dedup'] + 2} road distance and "
+        f"travel-time matrix from an OSM graph of {meta['road_graph']['nodes']:,} nodes; bins snapped to the road network at {meta['mean_snap_m']:.0f} m on average.",
+        f"- TrashNet split: {len(split):,} file names ({sum(r['split'] == 'train' for r in split):,} train, {sum(r['split'] == 'val' for r in split)} validation, {sum(r['split'] == 'test' for r in split)} test).",
+        "- Published reference distances for the routing benchmark, cited Singapore facts (`sg_facts.json`).",
+    ])
+
+
+BLOCKS = {"inputs": block_inputs, "findings": block_findings, "routing": block_routing, "mip": block_mip, "forecast": block_forecast,
           "casestudy": block_casestudy, "edge": block_edge, "tests": block_tests}
 
 
 def render(text: str) -> str:
     for name, fn in BLOCKS.items():
-        pat = re.compile(rf"(<!-- BEGIN:{name} -->\n).*?(\n<!-- END:{name} -->)", re.S)
+        pat = re.compile(rf"(<!-- BEGIN:{name} -->\n)(?:.*?\n)?(<!-- END:{name} -->)", re.S)
         if not pat.search(text):
             raise SystemExit(f"README block {name} missing")
         body = fn()
-        text = pat.sub(lambda m: m.group(1) + body + m.group(2), text)
+        text = pat.sub(lambda m: m.group(1) + body + "\n" + m.group(2), text)
     return text
 
 

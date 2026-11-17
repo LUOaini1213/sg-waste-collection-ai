@@ -20,7 +20,8 @@ def toy_raw():
     for pol, seed, day, km, bins, routes, ob, ov, load in data:
         rows.append({"scenario": "base", "seed": seed, "policy": pol, "day": day, "dow": day % 7, "bins": bins,
                      "load": load, "routes": routes, "unloads": routes, "km": float(km), "feasible": True,
-                     "overflow_bins": ob, "overflow_volume": ov, "mean_fill_at_collection": 0.5})
+                     "overflow_bins": ob, "overflow_volume": ov, "mean_fill_at_collection": 0.5,
+                     "work_hours": km / 10.0 + bins * 0.05})
     fill = pd.DataFrame({"bin": [1] * 4 + [2] * 4, "date": ["2026-01-0%d" % d for d in range(1, 5)] * 2,
                          "eod": [10, 30, 0, 20, 5, 5, 5, 5], "max": [12, 35, 95, 25, 5, 5, 5, 5],
                          "mean": [0.0] * 8, "changes": [3] * 4 + [0] * 4, "coll": [0, 0, 1, 0, 0, 0, 0, 0],
@@ -60,6 +61,9 @@ def test_policy_totals_and_changes(kpi):
     assert t.loc["forecast", "overflow_change_pct"] == pytest.approx(-200.0 / 3.0)
     assert t.loc["forecast", "co2_change_pct"] == pytest.approx(-40.0)
     assert t.loc["forecast", "km_per_lift"] == pytest.approx(4.0)
+    # hours = km / 10 + 0.05 per lift: fixed 3.0 + 0.5, forecast 1.8 + 0.225
+    assert t.loc["fixed", "work_hours"] == pytest.approx(3.5) and t.loc["forecast", "work_hours"] == pytest.approx(2.025)
+    assert t.loc["forecast", "hours_change_pct"] == pytest.approx(100.0 * (2.025 - 3.5) / 3.5)
     assert t.loc["forecast", "mean_fill_at_lift"] == pytest.approx(3.95 / 4.5)
     assert t.loc["fixed", "km_change_pct"] == pytest.approx(0.0)
     assert bool(t.loc["forecast", "all_feasible"])

@@ -29,6 +29,7 @@ SYNTH = [(seed, n) for n in (5, 6, 7) for seed in range(4)]
 SYNTH_CI = [(11, 5), (12, 5)]
 KIM_N = (6, 8, 10)
 ALNS_SEEDS = (1, 2, 3, 4, 5)
+TIME_LIMIT = 300.0   # seconds per MIP; instances not solved in time are reported as not proved optimal
 
 
 def check(inst, vehicles, time_limit, iters):
@@ -45,10 +46,12 @@ def check(inst, vehicles, time_limit, iters):
            "mip_objective": r["objective"], "mip_bound": r["bound"], "mip_seconds": r["seconds"],
            "mip_routes_checked": bool(ev and ev.feasible), "mip_checked_distance": ev.distance if ev else None,
            "alns_best": best_alns, "alns_all_feasible": all(a["feasible"] for a in alns),
-           "alns_hits_optimum_any": bool(r["optimal"] and best_alns <= r["objective"] + 1e-6),
-           "alns_hits_optimum_all": bool(r["optimal"] and all(a["distance"] <= r["objective"] + 1e-6 for a in alns)),
+           "alns_hits_optimum_any": bool(r["optimal"] and abs(best_alns - r["objective"]) <= 1e-6),
+           "alns_hits_optimum_all": bool(r["optimal"] and all(abs(a["distance"] - r["objective"]) <= 1e-6 for a in alns)),
            "alns_below_proven_optimum": bool(r["optimal"] and best_alns < r["objective"] - 1e-6),
            "alns_gap_pct": (100.0 * (best_alns - r["objective"]) / r["objective"]) if r["objective"] else None,
+           "alns_worst_seed_gap_pct": (100.0 * (max(a["distance"] for a in alns) - r["objective"]) / r["objective"]) if r["objective"] else None,
+           "mip_copies_per_facility": r["copies"],
            "alns": alns}
     print(f"{inst.name}: {r['status']} mip {r['objective']} alns {best_alns:.4f} checked={row['mip_routes_checked']}", flush=True)
     return row
@@ -61,30 +64,44 @@ def ci_rows() -> list:
     return rows
 
 
+def _job(spec):
+    group, name, n, cap, vehicles = spec
+    if group == "synthetic":
+        inst = synthetic(name, n_customers=n, capacity=cap)
+    else:
+        full = parse_kim(ROOT / "data" / "external" / "wcvrptw" / "102_stop.txt")
+        over = {} if cap is None else {"capacity": cap}
+        inst = subset(full, full.customers[:n], name=name, **over)
+    return group, check(inst, vehicles, TIME_LIMIT, 300)
+
+
 def main(argv=None) -> int:
+    from concurrent.futures import ProcessPoolExecutor
     ap = argparse.ArgumentParser()
     ap.add_argument("--group", default="all", choices=["synthetic", "kim102", "all"])
     ap.add_argument("--ci", action="store_true", help="two tiny synthetic instances -> results/routing_mip_ci.json")
+    ap.add_argument("--workers", type=int, default=3)
     args = ap.parse_args(argv)
     if args.ci:
         write_json(ROOT / "results" / "routing_mip_ci.json", {"rows": ci_rows()})
         return 0
     out_path = ROOT / "results" / "routing_mip.json"
     out = read_json(out_path) if out_path.exists() else {}
+    jobs = []
     if args.group in ("synthetic", "all"):
-        out["synthetic"] = [check(synthetic(s, n_customers=n, capacity=20.0), 3, 300, 300) for s, n in SYNTH]
+        jobs += [("synthetic", s, n, 20.0, 3) for s, n in SYNTH]
     if args.group in ("kim102", "all"):
-        path = ROOT / "data" / "external" / "wcvrptw" / "102_stop.txt"
-        if not path.exists():
+        if not (ROOT / "data" / "external" / "wcvrptw" / "102_stop.txt").exists():
             print("instance 102 missing; run scripts/fetch_wcvrptw.py")
         else:
-            full = parse_kim(path)
-            rows = []
             for n in KIM_N:
-                cust = full.customers[:n]
-                rows.append(check(subset(full, cust, name=f"102-first{n}"), 2, 300, 300))
-                rows.append(check(subset(full, cust, name=f"102-first{n}-Q40", capacity=40.0), 3, 300, 300))
-            out["kim102"] = rows
+                jobs.append(("kim102", f"102-first{n}", n, None, 2))
+                jobs.append(("kim102", f"102-first{n}-Q40", n, 40.0, 3))
+    with ProcessPoolExecutor(max_workers=args.workers) as ex:
+        results = list(ex.map(_job, jobs))
+    for group in dict.fromkeys(g for g, _ in results):
+        out[group] = [row for g, row in results if g == group]
+    out["time_limit_s"] = TIME_LIMIT
     write_json(out_path, out)
     return 0
 

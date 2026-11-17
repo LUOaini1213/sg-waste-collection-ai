@@ -1,0 +1,1733 @@
+{
+ "trnava_shape": {
+  "dow_factors": [
+   0.798296,
+   1.002377,
+   0.987859,
+   1.207399,
+   1.063191,
+   1.090845,
+   0.850033
+  ],
+  "noise_cv": 1.101527,
+  "n_bins": 241,
+  "mean_daily_increment_pp": 12.237277
+ },
+ "plausibility": {
+  "domestic_recycled_t_per_day": 565.491765,
+  "upper_bound_kg_per_hdb_dwelling_day": 0.479573,
+  "note": "all domestic recycling channels divided by HDB dwellings only: an upper bound for blue bins"
+ },
+ "scenarios": {
+  "base": {
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "config": {
+    "days_warmup": 14,
+    "days_measured": 42,
+    "start_dow": 0,
+    "base_rate": 0.2,
+    "units_clip": [
+     0.5,
+     2.0
+    ],
+    "dow_factors": [
+     0.798296,
+     1.002377,
+     0.987859,
+     1.207399,
+     1.063191,
+     1.090845,
+     0.850033
+    ],
+    "noise_cv": 0.5,
+    "sensor_sd": 0.03,
+    "truck_capacity": 40.0,
+    "service_s": 180.0,
+    "unload_s": 1200.0,
+    "shift": [
+     25200.0,
+     61200.0
+    ],
+    "rest": [
+     39600.0,
+     43200.0,
+     3600.0
+    ],
+    "threshold": 0.7,
+    "forecast_level": 0.9,
+    "max_gap_days": 7,
+    "rate_window": 14,
+    "alns_iters": 60,
+    "seed": 1,
+    "policies": [
+     "fixed",
+     "threshold",
+     "forecast"
+    ],
+    "co2_kg_per_km": 0.99156
+   },
+   "policies": {
+    "fixed": {
+     "km": {
+      "mean": 2653.235033,
+      "min": 2632.4465,
+      "max": 2666.6876
+     },
+     "lifts": {
+      "mean": 3654.0,
+      "min": 3654.0,
+      "max": 3654.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 63.666667,
+      "min": 63.0,
+      "max": 64.0
+     },
+     "overflow_bin_days": {
+      "mean": 199.333333,
+      "min": 195.0,
+      "max": 202.0
+     },
+     "overflow_volume": {
+      "mean": 38.829605,
+      "min": 37.595032,
+      "max": 40.600526
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.468201,
+      "min": 0.464963,
+      "max": 0.473245
+     },
+     "co2_kg": {
+      "mean": 2630.84173,
+      "min": 2610.228652,
+      "max": 2644.180757
+     },
+     "loads_collected": {
+      "mean": 1710.807028,
+      "min": 1698.973044,
+      "max": 1729.238454
+     },
+     "work_hours": {
+      "mean": 284.100241,
+      "min": 283.4375,
+      "max": 284.509722
+     },
+     "all_routes_feasible": true
+    },
+    "threshold": {
+     "km": {
+      "mean": 2634.098833,
+      "min": 2588.1209,
+      "max": 2684.3674
+     },
+     "lifts": {
+      "mean": 2002.0,
+      "min": 1982.0,
+      "max": 2030.0
+     },
+     "truck_days": {
+      "mean": 39.666667,
+      "min": 37.0,
+      "max": 41.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 60.0,
+      "min": 59.0,
+      "max": 61.0
+     },
+     "overflow_bin_days": {
+      "mean": 396.666667,
+      "min": 373.0,
+      "max": 418.0
+     },
+     "overflow_volume": {
+      "mean": 60.146316,
+      "min": 57.823157,
+      "max": 63.504304
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.847006,
+      "min": 0.846118,
+      "max": 0.847992
+     },
+     "co2_kg": {
+      "mean": 2611.867039,
+      "min": 2566.27716,
+      "max": 2661.711339
+     },
+     "loads_collected": {
+      "mean": 1695.701745,
+      "min": 1680.720166,
+      "max": 1719.225217
+     },
+     "work_hours": {
+      "mean": 200.648528,
+      "min": 198.559389,
+      "max": 203.929972
+     },
+     "all_routes_feasible": true
+    },
+    "forecast": {
+     "km": {
+      "mean": 2715.7787,
+      "min": 2690.4082,
+      "max": 2729.3612
+     },
+     "lifts": {
+      "mean": 2239.0,
+      "min": 2210.0,
+      "max": 2275.0
+     },
+     "truck_days": {
+      "mean": 38.0,
+      "min": 37.0,
+      "max": 39.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 61.666667,
+      "min": 61.0,
+      "max": 62.0
+     },
+     "overflow_bin_days": {
+      "mean": 200.333333,
+      "min": 189.0,
+      "max": 217.0
+     },
+     "overflow_volume": {
+      "mean": 27.008296,
+      "min": 23.993355,
+      "max": 29.085752
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.772037,
+      "min": 0.767127,
+      "max": 0.776236
+     },
+     "co2_kg": {
+      "mean": 2692.857528,
+      "min": 2667.701155,
+      "max": 2706.325391
+     },
+     "loads_collected": {
+      "mean": 1728.570484,
+      "min": 1712.22732,
+      "max": 1758.002139
+     },
+     "work_hours": {
+      "mean": 216.452852,
+      "min": 215.156389,
+      "max": 218.920139
+     },
+     "all_routes_feasible": true
+    }
+   },
+   "change_vs_fixed_pct": {
+    "threshold": {
+     "km": -0.72124,
+     "lifts": -45.210728,
+     "truck_days": 10.185185,
+     "overflow_bin_days": 98.996656,
+     "co2_kg": -0.72124,
+     "work_hours": -29.374038
+    },
+    "forecast": {
+     "km": 2.357261,
+     "lifts": -38.724685,
+     "truck_days": 5.555556,
+     "overflow_bin_days": 0.501672,
+     "co2_kg": 2.357261,
+     "work_hours": -23.811099
+    }
+   }
+  },
+  "trnava_variability": {
+   "seeds": [
+    1
+   ],
+   "config": {
+    "days_warmup": 14,
+    "days_measured": 42,
+    "start_dow": 0,
+    "base_rate": 0.2,
+    "units_clip": [
+     0.5,
+     2.0
+    ],
+    "dow_factors": [
+     0.798296,
+     1.002377,
+     0.987859,
+     1.207399,
+     1.063191,
+     1.090845,
+     0.850033
+    ],
+    "noise_cv": 1.101527,
+    "sensor_sd": 0.03,
+    "truck_capacity": 40.0,
+    "service_s": 180.0,
+    "unload_s": 1200.0,
+    "shift": [
+     25200.0,
+     61200.0
+    ],
+    "rest": [
+     39600.0,
+     43200.0,
+     3600.0
+    ],
+    "threshold": 0.7,
+    "forecast_level": 0.9,
+    "max_gap_days": 7,
+    "rate_window": 14,
+    "alns_iters": 60,
+    "seed": 1,
+    "policies": [
+     "fixed",
+     "threshold",
+     "forecast"
+    ],
+    "co2_kg_per_km": 0.99156
+   },
+   "policies": {
+    "fixed": {
+     "km": {
+      "mean": 2346.3194,
+      "min": 2346.3194,
+      "max": 2346.3194
+     },
+     "lifts": {
+      "mean": 3654.0,
+      "min": 3654.0,
+      "max": 3654.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 54.0,
+      "min": 54.0,
+      "max": 54.0
+     },
+     "overflow_bin_days": {
+      "mean": 432.0,
+      "min": 432.0,
+      "max": 432.0
+     },
+     "overflow_volume": {
+      "mean": 166.059278,
+      "min": 166.059278,
+      "max": 166.059278
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.430032,
+      "min": 0.430032,
+      "max": 0.430032
+     },
+     "co2_kg": {
+      "mean": 2326.516464,
+      "min": 2326.516464,
+      "max": 2326.516464
+     },
+     "loads_collected": {
+      "mean": 1571.336168,
+      "min": 1571.336168,
+      "max": 1571.336168
+     },
+     "work_hours": {
+      "mean": 274.650278,
+      "min": 274.650278,
+      "max": 274.650278
+     },
+     "all_routes_feasible": true
+    },
+    "threshold": {
+     "km": {
+      "mean": 2337.7758,
+      "min": 2337.7758,
+      "max": 2337.7758
+     },
+     "lifts": {
+      "mean": 1783.0,
+      "min": 1783.0,
+      "max": 1783.0
+     },
+     "truck_days": {
+      "mean": 37.0,
+      "min": 37.0,
+      "max": 37.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 52.0,
+      "min": 52.0,
+      "max": 52.0
+     },
+     "overflow_bin_days": {
+      "mean": 557.0,
+      "min": 557.0,
+      "max": 557.0
+     },
+     "overflow_volume": {
+      "mean": 203.86746,
+      "min": 203.86746,
+      "max": 203.86746
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.860724,
+      "min": 0.860724,
+      "max": 0.860724
+     },
+     "co2_kg": {
+      "mean": 2318.044972,
+      "min": 2318.044972,
+      "max": 2318.044972
+     },
+     "loads_collected": {
+      "mean": 1534.671769,
+      "min": 1534.671769,
+      "max": 1534.671769
+     },
+     "work_hours": {
+      "mean": 179.034028,
+      "min": 179.034028,
+      "max": 179.034028
+     },
+     "all_routes_feasible": true
+    },
+    "forecast": {
+     "km": {
+      "mean": 2497.2638,
+      "min": 2497.2638,
+      "max": 2497.2638
+     },
+     "lifts": {
+      "mean": 1998.0,
+      "min": 1998.0,
+      "max": 1998.0
+     },
+     "truck_days": {
+      "mean": 37.0,
+      "min": 37.0,
+      "max": 37.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 56.0,
+      "min": 56.0,
+      "max": 56.0
+     },
+     "overflow_bin_days": {
+      "mean": 434.0,
+      "min": 434.0,
+      "max": 434.0
+     },
+     "overflow_volume": {
+      "mean": 170.20809,
+      "min": 170.20809,
+      "max": 170.20809
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.786221,
+      "min": 0.786221,
+      "max": 0.786221
+     },
+     "co2_kg": {
+      "mean": 2476.186894,
+      "min": 2476.186894,
+      "max": 2476.186894
+     },
+     "loads_collected": {
+      "mean": 1570.870128,
+      "min": 1570.870128,
+      "max": 1570.870128
+     },
+     "work_hours": {
+      "mean": 195.988583,
+      "min": 195.988583,
+      "max": 195.988583
+     },
+     "all_routes_feasible": true
+    }
+   },
+   "change_vs_fixed_pct": {
+    "threshold": {
+     "km": -0.364128,
+     "lifts": -51.20416,
+     "truck_days": 2.777778,
+     "overflow_bin_days": 28.935185,
+     "co2_kg": -0.364128,
+     "work_hours": -34.813819
+    },
+    "forecast": {
+     "km": 6.433242,
+     "lifts": -45.320197,
+     "truck_days": 2.777778,
+     "overflow_bin_days": 0.462963,
+     "co2_kg": 6.433242,
+     "work_hours": -28.640675
+    }
+   }
+  },
+  "low_fill_rate": {
+   "seeds": [
+    1
+   ],
+   "config": {
+    "days_warmup": 14,
+    "days_measured": 42,
+    "start_dow": 0,
+    "base_rate": 0.15,
+    "units_clip": [
+     0.5,
+     2.0
+    ],
+    "dow_factors": [
+     0.798296,
+     1.002377,
+     0.987859,
+     1.207399,
+     1.063191,
+     1.090845,
+     0.850033
+    ],
+    "noise_cv": 0.5,
+    "sensor_sd": 0.03,
+    "truck_capacity": 40.0,
+    "service_s": 180.0,
+    "unload_s": 1200.0,
+    "shift": [
+     25200.0,
+     61200.0
+    ],
+    "rest": [
+     39600.0,
+     43200.0,
+     3600.0
+    ],
+    "threshold": 0.7,
+    "forecast_level": 0.9,
+    "max_gap_days": 7,
+    "rate_window": 14,
+    "alns_iters": 60,
+    "seed": 1,
+    "policies": [
+     "fixed",
+     "threshold",
+     "forecast"
+    ],
+    "co2_kg_per_km": 0.99156
+   },
+   "policies": {
+    "fixed": {
+     "km": {
+      "mean": 2030.5911,
+      "min": 2030.5911,
+      "max": 2030.5911
+     },
+     "lifts": {
+      "mean": 3654.0,
+      "min": 3654.0,
+      "max": 3654.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 44.0,
+      "min": 44.0,
+      "max": 44.0
+     },
+     "overflow_bin_days": {
+      "mean": 51.0,
+      "min": 51.0,
+      "max": 51.0
+     },
+     "overflow_volume": {
+      "mean": 9.479948,
+      "min": 9.479948,
+      "max": 9.479948
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.353956,
+      "min": 0.353956,
+      "max": 0.353956
+     },
+     "co2_kg": {
+      "mean": 2013.452911,
+      "min": 2013.452911,
+      "max": 2013.452911
+     },
+     "loads_collected": {
+      "mean": 1293.354325,
+      "min": 1293.354325,
+      "max": 1293.354325
+     },
+     "work_hours": {
+      "mean": 264.843667,
+      "min": 264.843667,
+      "max": 264.843667
+     },
+     "all_routes_feasible": true
+    },
+    "threshold": {
+     "km": {
+      "mean": 2049.8463,
+      "min": 2049.8463,
+      "max": 2049.8463
+     },
+     "lifts": {
+      "mean": 1569.0,
+      "min": 1569.0,
+      "max": 1569.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 44.0,
+      "min": 44.0,
+      "max": 44.0
+     },
+     "overflow_bin_days": {
+      "mean": 162.0,
+      "min": 162.0,
+      "max": 162.0
+     },
+     "overflow_volume": {
+      "mean": 20.038707,
+      "min": 20.038707,
+      "max": 20.038707
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.819606,
+      "min": 0.819606,
+      "max": 0.819606
+     },
+     "co2_kg": {
+      "mean": 2032.545597,
+      "min": 2032.545597,
+      "max": 2032.545597
+     },
+     "loads_collected": {
+      "mean": 1285.962568,
+      "min": 1285.962568,
+      "max": 1285.962568
+     },
+     "work_hours": {
+      "mean": 157.653917,
+      "min": 157.653917,
+      "max": 157.653917
+     },
+     "all_routes_feasible": true
+    },
+    "forecast": {
+     "km": {
+      "mean": 2194.8758,
+      "min": 2194.8758,
+      "max": 2194.8758
+     },
+     "lifts": {
+      "mean": 1707.0,
+      "min": 1707.0,
+      "max": 1707.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 48.0,
+      "min": 48.0,
+      "max": 48.0
+     },
+     "overflow_bin_days": {
+      "mean": 92.0,
+      "min": 92.0,
+      "max": 92.0
+     },
+     "overflow_volume": {
+      "mean": 11.04182,
+      "min": 11.04182,
+      "max": 11.04182
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.759193,
+      "min": 0.759193,
+      "max": 0.759193
+     },
+     "co2_kg": {
+      "mean": 2176.351048,
+      "min": 2176.351048,
+      "max": 2176.351048
+     },
+     "loads_collected": {
+      "mean": 1295.942372,
+      "min": 1295.942372,
+      "max": 1295.942372
+     },
+     "work_hours": {
+      "mean": 169.891528,
+      "min": 169.891528,
+      "max": 169.891528
+     },
+     "all_routes_feasible": true
+    }
+   },
+   "change_vs_fixed_pct": {
+    "threshold": {
+     "km": 0.948256,
+     "lifts": -57.060755,
+     "truck_days": 0.0,
+     "overflow_bin_days": 217.647059,
+     "co2_kg": 0.948256,
+     "work_hours": -40.472839
+    },
+    "forecast": {
+     "km": 8.090487,
+     "lifts": -53.284072,
+     "truck_days": 0.0,
+     "overflow_bin_days": 80.392157,
+     "co2_kg": 8.090487,
+     "work_hours": -35.852146
+    }
+   }
+  },
+  "high_fill_rate": {
+   "seeds": [
+    1
+   ],
+   "config": {
+    "days_warmup": 14,
+    "days_measured": 42,
+    "start_dow": 0,
+    "base_rate": 0.3,
+    "units_clip": [
+     0.5,
+     2.0
+    ],
+    "dow_factors": [
+     0.798296,
+     1.002377,
+     0.987859,
+     1.207399,
+     1.063191,
+     1.090845,
+     0.850033
+    ],
+    "noise_cv": 0.5,
+    "sensor_sd": 0.03,
+    "truck_capacity": 40.0,
+    "service_s": 180.0,
+    "unload_s": 1200.0,
+    "shift": [
+     25200.0,
+     61200.0
+    ],
+    "rest": [
+     39600.0,
+     43200.0,
+     3600.0
+    ],
+    "threshold": 0.7,
+    "forecast_level": 0.9,
+    "max_gap_days": 7,
+    "rate_window": 14,
+    "alns_iters": 60,
+    "seed": 1,
+    "policies": [
+     "fixed",
+     "threshold",
+     "forecast"
+    ],
+    "co2_kg_per_km": 0.99156
+   },
+   "policies": {
+    "fixed": {
+     "km": {
+      "mean": 3149.9749,
+      "min": 3149.9749,
+      "max": 3149.9749
+     },
+     "lifts": {
+      "mean": 3654.0,
+      "min": 3654.0,
+      "max": 3654.0
+     },
+     "truck_days": {
+      "mean": 44.0,
+      "min": 44.0,
+      "max": 44.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 78.0,
+      "min": 78.0,
+      "max": 78.0
+     },
+     "overflow_bin_days": {
+      "mean": 840.0,
+      "min": 840.0,
+      "max": 840.0
+     },
+     "overflow_volume": {
+      "mean": 237.588263,
+      "min": 237.588263,
+      "max": 237.588263
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.648558,
+      "min": 0.648558,
+      "max": 0.648558
+     },
+     "co2_kg": {
+      "mean": 3123.389112,
+      "min": 3123.389112,
+      "max": 3123.389112
+     },
+     "loads_collected": {
+      "mean": 2369.830001,
+      "min": 2369.830001,
+      "max": 2369.830001
+     },
+     "work_hours": {
+      "mean": 299.241333,
+      "min": 299.241333,
+      "max": 299.241333
+     },
+     "all_routes_feasible": true
+    },
+    "threshold": {
+     "km": {
+      "mean": 3265.3167,
+      "min": 3265.3167,
+      "max": 3265.3167
+     },
+     "lifts": {
+      "mean": 2706.0,
+      "min": 2706.0,
+      "max": 2706.0
+     },
+     "truck_days": {
+      "mean": 42.0,
+      "min": 42.0,
+      "max": 42.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 76.0,
+      "min": 76.0,
+      "max": 76.0
+     },
+     "overflow_bin_days": {
+      "mean": 966.0,
+      "min": 966.0,
+      "max": 966.0
+     },
+     "overflow_volume": {
+      "mean": 214.995169,
+      "min": 214.995169,
+      "max": 214.995169
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.883648,
+      "min": 0.883648,
+      "max": 0.883648
+     },
+     "co2_kg": {
+      "mean": 3237.757427,
+      "min": 3237.757427,
+      "max": 3237.757427
+     },
+     "loads_collected": {
+      "mean": 2391.150444,
+      "min": 2391.150444,
+      "max": 2391.150444
+     },
+     "work_hours": {
+      "mean": 258.636639,
+      "min": 258.636639,
+      "max": 258.636639
+     },
+     "all_routes_feasible": true
+    },
+    "forecast": {
+     "km": {
+      "mean": 3504.8557,
+      "min": 3504.8557,
+      "max": 3504.8557
+     },
+     "lifts": {
+      "mean": 3321.0,
+      "min": 3321.0,
+      "max": 3321.0
+     },
+     "truck_days": {
+      "mean": 46.0,
+      "min": 46.0,
+      "max": 46.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 81.0,
+      "min": 81.0,
+      "max": 81.0
+     },
+     "overflow_bin_days": {
+      "mean": 476.0,
+      "min": 476.0,
+      "max": 476.0
+     },
+     "overflow_volume": {
+      "mean": 96.573465,
+      "min": 96.573465,
+      "max": 96.573465
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.755012,
+      "min": 0.755012,
+      "max": 0.755012
+     },
+     "co2_kg": {
+      "mean": 3475.274718,
+      "min": 3475.274718,
+      "max": 3475.274718
+     },
+     "loads_collected": {
+      "mean": 2507.394533,
+      "min": 2507.394533,
+      "max": 2507.394533
+     },
+     "work_hours": {
+      "mean": 300.477306,
+      "min": 300.477306,
+      "max": 300.477306
+     },
+     "all_routes_feasible": true
+    }
+   },
+   "change_vs_fixed_pct": {
+    "threshold": {
+     "km": 3.661674,
+     "lifts": -25.944171,
+     "truck_days": -4.545455,
+     "overflow_bin_days": 15.0,
+     "co2_kg": 3.661674,
+     "work_hours": -13.569213
+    },
+    "forecast": {
+     "km": 11.266147,
+     "lifts": -9.1133,
+     "truck_days": 4.545455,
+     "overflow_bin_days": -43.333333,
+     "co2_kg": 11.266147,
+     "work_hours": 0.413035
+    }
+   }
+  },
+  "bigger_truck": {
+   "seeds": [
+    1
+   ],
+   "config": {
+    "days_warmup": 14,
+    "days_measured": 42,
+    "start_dow": 0,
+    "base_rate": 0.2,
+    "units_clip": [
+     0.5,
+     2.0
+    ],
+    "dow_factors": [
+     0.798296,
+     1.002377,
+     0.987859,
+     1.207399,
+     1.063191,
+     1.090845,
+     0.850033
+    ],
+    "noise_cv": 0.5,
+    "sensor_sd": 0.03,
+    "truck_capacity": 80.0,
+    "service_s": 180.0,
+    "unload_s": 1200.0,
+    "shift": [
+     25200.0,
+     61200.0
+    ],
+    "rest": [
+     39600.0,
+     43200.0,
+     3600.0
+    ],
+    "threshold": 0.7,
+    "forecast_level": 0.9,
+    "max_gap_days": 7,
+    "rate_window": 14,
+    "alns_iters": 60,
+    "seed": 1,
+    "policies": [
+     "fixed",
+     "threshold",
+     "forecast"
+    ],
+    "co2_kg_per_km": 0.99156
+   },
+   "policies": {
+    "fixed": {
+     "km": {
+      "mean": 1786.3129,
+      "min": 1786.3129,
+      "max": 1786.3129
+     },
+     "lifts": {
+      "mean": 3654.0,
+      "min": 3654.0,
+      "max": 3654.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "overflow_bin_days": {
+      "mean": 195.0,
+      "min": 195.0,
+      "max": 195.0
+     },
+     "overflow_volume": {
+      "mean": 38.293256,
+      "min": 38.293256,
+      "max": 38.293256
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.464963,
+      "min": 0.464963,
+      "max": 0.464963
+     },
+     "co2_kg": {
+      "mean": 1771.236419,
+      "min": 1771.236419,
+      "max": 1771.236419
+     },
+     "loads_collected": {
+      "mean": 1698.973044,
+      "min": 1698.973044,
+      "max": 1698.973044
+     },
+     "work_hours": {
+      "mean": 257.3195,
+      "min": 257.3195,
+      "max": 257.3195
+     },
+     "all_routes_feasible": true
+    },
+    "threshold": {
+     "km": {
+      "mean": 1985.1445,
+      "min": 1985.1445,
+      "max": 1985.1445
+     },
+     "lifts": {
+      "mean": 1994.0,
+      "min": 1994.0,
+      "max": 1994.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 40.0,
+      "min": 40.0,
+      "max": 40.0
+     },
+     "overflow_bin_days": {
+      "mean": 373.0,
+      "min": 373.0,
+      "max": 373.0
+     },
+     "overflow_volume": {
+      "mean": 59.111488,
+      "min": 59.111488,
+      "max": 59.111488
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.846118,
+      "min": 0.846118,
+      "max": 0.846118
+     },
+     "co2_kg": {
+      "mean": 1968.38988,
+      "min": 1968.38988,
+      "max": 1968.38988
+     },
+     "loads_collected": {
+      "mean": 1687.159851,
+      "min": 1687.159851,
+      "max": 1687.159851
+     },
+     "work_hours": {
+      "mean": 179.907944,
+      "min": 179.907944,
+      "max": 179.907944
+     },
+     "all_routes_feasible": true
+    },
+    "forecast": {
+     "km": {
+      "mean": 1900.4471,
+      "min": 1900.4471,
+      "max": 1900.4471
+     },
+     "lifts": {
+      "mean": 2232.0,
+      "min": 2232.0,
+      "max": 2232.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "overflow_bin_days": {
+      "mean": 189.0,
+      "min": 189.0,
+      "max": 189.0
+     },
+     "overflow_volume": {
+      "mean": 27.945781,
+      "min": 27.945781,
+      "max": 27.945781
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.767127,
+      "min": 0.767127,
+      "max": 0.767127
+     },
+     "co2_kg": {
+      "mean": 1884.407326,
+      "min": 1884.407326,
+      "max": 1884.407326
+     },
+     "loads_collected": {
+      "mean": 1712.22732,
+      "min": 1712.22732,
+      "max": 1712.22732
+     },
+     "work_hours": {
+      "mean": 190.648889,
+      "min": 190.648889,
+      "max": 190.648889
+     },
+     "all_routes_feasible": true
+    }
+   },
+   "change_vs_fixed_pct": {
+    "threshold": {
+     "km": 11.130838,
+     "lifts": -45.429666,
+     "truck_days": 0.0,
+     "overflow_bin_days": 91.282051,
+     "co2_kg": 11.130838,
+     "work_hours": -30.083828
+    },
+    "forecast": {
+     "km": 6.389373,
+     "lifts": -38.916256,
+     "truck_days": 0.0,
+     "overflow_bin_days": -3.076923,
+     "co2_kg": 6.389373,
+     "work_hours": -25.909661
+    }
+   }
+  },
+  "facility_in_town": {
+   "seeds": [
+    1
+   ],
+   "config": {
+    "days_warmup": 14,
+    "days_measured": 42,
+    "start_dow": 0,
+    "base_rate": 0.2,
+    "units_clip": [
+     0.5,
+     2.0
+    ],
+    "dow_factors": [
+     0.798296,
+     1.002377,
+     0.987859,
+     1.207399,
+     1.063191,
+     1.090845,
+     0.850033
+    ],
+    "noise_cv": 0.5,
+    "sensor_sd": 0.03,
+    "truck_capacity": 40.0,
+    "service_s": 180.0,
+    "unload_s": 1200.0,
+    "shift": [
+     25200.0,
+     61200.0
+    ],
+    "rest": [
+     39600.0,
+     43200.0,
+     3600.0
+    ],
+    "threshold": 0.7,
+    "forecast_level": 0.9,
+    "max_gap_days": 7,
+    "rate_window": 14,
+    "alns_iters": 60,
+    "seed": 1,
+    "policies": [
+     "fixed",
+     "threshold",
+     "forecast"
+    ],
+    "co2_kg_per_km": 0.99156
+   },
+   "policies": {
+    "fixed": {
+     "km": {
+      "mean": 690.1413,
+      "min": 690.1413,
+      "max": 690.1413
+     },
+     "lifts": {
+      "mean": 3654.0,
+      "min": 3654.0,
+      "max": 3654.0
+     },
+     "truck_days": {
+      "mean": 37.0,
+      "min": 37.0,
+      "max": 37.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 65.0,
+      "min": 65.0,
+      "max": 65.0
+     },
+     "overflow_bin_days": {
+      "mean": 195.0,
+      "min": 195.0,
+      "max": 195.0
+     },
+     "overflow_volume": {
+      "mean": 38.293256,
+      "min": 38.293256,
+      "max": 38.293256
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.464963,
+      "min": 0.464963,
+      "max": 0.464963
+     },
+     "co2_kg": {
+      "mean": 684.316507,
+      "min": 684.316507,
+      "max": 684.316507
+     },
+     "loads_collected": {
+      "mean": 1698.973044,
+      "min": 1698.973044,
+      "max": 1698.973044
+     },
+     "work_hours": {
+      "mean": 245.160917,
+      "min": 245.160917,
+      "max": 245.160917
+     },
+     "all_routes_feasible": true
+    },
+    "threshold": {
+     "km": {
+      "mean": 834.5239,
+      "min": 834.5239,
+      "max": 834.5239
+     },
+     "lifts": {
+      "mean": 1994.0,
+      "min": 1994.0,
+      "max": 1994.0
+     },
+     "truck_days": {
+      "mean": 36.0,
+      "min": 36.0,
+      "max": 36.0
+     },
+     "max_trucks_per_day": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0
+     },
+     "unloads": {
+      "mean": 59.0,
+      "min": 59.0,
+      "max": 59.0
+     },
+     "overflow_bin_days": {
+      "mean": 373.0,
+      "min": 373.0,
+      "max": 373.0
+     },
+     "overflow_volume": {
+      "mean": 59.111488,
+      "min": 59.111488,
+      "max": 59.111488
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.846118,
+      "min": 0.846118,
+      "max": 0.846118
+     },
+     "co2_kg": {
+      "mean": 827.480518,
+      "min": 827.480518,
+      "max": 827.480518
+     },
+     "loads_collected": {
+      "mean": 1687.159851,
+      "min": 1687.159851,
+      "max": 1687.159851
+     },
+     "work_hours": {
+      "mean": 163.592194,
+      "min": 163.592194,
+      "max": 163.592194
+     },
+     "all_routes_feasible": true
+    },
+    "forecast": {
+     "km": {
+      "mean": 870.2119,
+      "min": 870.2119,
+      "max": 870.2119
+     },
+     "lifts": {
+      "mean": 2232.0,
+      "min": 2232.0,
+      "max": 2232.0
+     },
+     "truck_days": {
+      "mean": 37.0,
+      "min": 37.0,
+      "max": 37.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 63.0,
+      "min": 63.0,
+      "max": 63.0
+     },
+     "overflow_bin_days": {
+      "mean": 189.0,
+      "min": 189.0,
+      "max": 189.0
+     },
+     "overflow_volume": {
+      "mean": 27.945781,
+      "min": 27.945781,
+      "max": 27.945781
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.767127,
+      "min": 0.767127,
+      "max": 0.767127
+     },
+     "co2_kg": {
+      "mean": 862.867312,
+      "min": 862.867312,
+      "max": 862.867312
+     },
+     "loads_collected": {
+      "mean": 1712.22732,
+      "min": 1712.22732,
+      "max": 1712.22732
+     },
+     "work_hours": {
+      "mean": 179.655944,
+      "min": 179.655944,
+      "max": 179.655944
+     },
+     "all_routes_feasible": true
+    }
+   },
+   "change_vs_fixed_pct": {
+    "threshold": {
+     "km": 20.92073,
+     "lifts": -45.429666,
+     "truck_days": -2.702703,
+     "overflow_bin_days": 91.282051,
+     "co2_kg": 20.92073,
+     "work_hours": -33.271503
+    },
+    "forecast": {
+     "km": 26.091845,
+     "lifts": -38.916256,
+     "truck_days": 0.0,
+     "overflow_bin_days": -3.076923,
+     "co2_kg": 26.091845,
+     "work_hours": -26.719174
+    }
+   }
+  },
+  "more_search": {
+   "seeds": [
+    1
+   ],
+   "config": {
+    "days_warmup": 14,
+    "days_measured": 42,
+    "start_dow": 0,
+    "base_rate": 0.2,
+    "units_clip": [
+     0.5,
+     2.0
+    ],
+    "dow_factors": [
+     0.798296,
+     1.002377,
+     0.987859,
+     1.207399,
+     1.063191,
+     1.090845,
+     0.850033
+    ],
+    "noise_cv": 0.5,
+    "sensor_sd": 0.03,
+    "truck_capacity": 40.0,
+    "service_s": 180.0,
+    "unload_s": 1200.0,
+    "shift": [
+     25200.0,
+     61200.0
+    ],
+    "rest": [
+     39600.0,
+     43200.0,
+     3600.0
+    ],
+    "threshold": 0.7,
+    "forecast_level": 0.9,
+    "max_gap_days": 7,
+    "rate_window": 14,
+    "alns_iters": 200,
+    "seed": 1,
+    "policies": [
+     "fixed",
+     "threshold",
+     "forecast"
+    ],
+    "co2_kg_per_km": 0.99156
+   },
+   "policies": {
+    "fixed": {
+     "km": {
+      "mean": 2655.1906,
+      "min": 2655.1906,
+      "max": 2655.1906
+     },
+     "lifts": {
+      "mean": 3654.0,
+      "min": 3654.0,
+      "max": 3654.0
+     },
+     "truck_days": {
+      "mean": 37.0,
+      "min": 37.0,
+      "max": 37.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 64.0,
+      "min": 64.0,
+      "max": 64.0
+     },
+     "overflow_bin_days": {
+      "mean": 195.0,
+      "min": 195.0,
+      "max": 195.0
+     },
+     "overflow_volume": {
+      "mean": 38.293256,
+      "min": 38.293256,
+      "max": 38.293256
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.464963,
+      "min": 0.464963,
+      "max": 0.464963
+     },
+     "co2_kg": {
+      "mean": 2632.780791,
+      "min": 2632.780791,
+      "max": 2632.780791
+     },
+     "loads_collected": {
+      "mean": 1698.973044,
+      "min": 1698.973044,
+      "max": 1698.973044
+     },
+     "work_hours": {
+      "mean": 284.1595,
+      "min": 284.1595,
+      "max": 284.1595
+     },
+     "all_routes_feasible": true
+    },
+    "threshold": {
+     "km": {
+      "mean": 2586.1457,
+      "min": 2586.1457,
+      "max": 2586.1457
+     },
+     "lifts": {
+      "mean": 1994.0,
+      "min": 1994.0,
+      "max": 1994.0
+     },
+     "truck_days": {
+      "mean": 40.0,
+      "min": 40.0,
+      "max": 40.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 59.0,
+      "min": 59.0,
+      "max": 59.0
+     },
+     "overflow_bin_days": {
+      "mean": 373.0,
+      "min": 373.0,
+      "max": 373.0
+     },
+     "overflow_volume": {
+      "mean": 59.111488,
+      "min": 59.111488,
+      "max": 59.111488
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.846118,
+      "min": 0.846118,
+      "max": 0.846118
+     },
+     "co2_kg": {
+      "mean": 2564.31863,
+      "min": 2564.31863,
+      "max": 2564.31863
+     },
+     "loads_collected": {
+      "mean": 1687.159851,
+      "min": 1687.159851,
+      "max": 1687.159851
+     },
+     "work_hours": {
+      "mean": 198.53275,
+      "min": 198.53275,
+      "max": 198.53275
+     },
+     "all_routes_feasible": true
+    },
+    "forecast": {
+     "km": {
+      "mean": 2684.8799,
+      "min": 2684.8799,
+      "max": 2684.8799
+     },
+     "lifts": {
+      "mean": 2232.0,
+      "min": 2232.0,
+      "max": 2232.0
+     },
+     "truck_days": {
+      "mean": 39.0,
+      "min": 39.0,
+      "max": 39.0
+     },
+     "max_trucks_per_day": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0
+     },
+     "unloads": {
+      "mean": 61.0,
+      "min": 61.0,
+      "max": 61.0
+     },
+     "overflow_bin_days": {
+      "mean": 189.0,
+      "min": 189.0,
+      "max": 189.0
+     },
+     "overflow_volume": {
+      "mean": 27.945781,
+      "min": 27.945781,
+      "max": 27.945781
+     },
+     "mean_fill_at_collection": {
+      "mean": 0.767127,
+      "min": 0.767127,
+      "max": 0.767127
+     },
+     "co2_kg": {
+      "mean": 2662.219514,
+      "min": 2662.219514,
+      "max": 2662.219514
+     },
+     "loads_collected": {
+      "mean": 1712.22732,
+      "min": 1712.22732,
+      "max": 1712.22732
+     },
+     "work_hours": {
+      "mean": 214.961972,
+      "min": 214.961972,
+      "max": 214.961972
+     },
+     "all_routes_feasible": true
+    }
+   },
+   "change_vs_fixed_pct": {
+    "threshold": {
+     "km": -2.600375,
+     "lifts": -45.429666,
+     "truck_days": 8.108108,
+     "overflow_bin_days": 91.282051,
+     "co2_kg": -2.600375,
+     "work_hours": -30.133341
+    },
+    "forecast": {
+     "km": 1.118161,
+     "lifts": -38.916256,
+     "truck_days": 5.405405,
+     "overflow_bin_days": -3.076923,
+     "co2_kg": 1.118161,
+     "work_hours": -24.35165
+    }
+   }
+  }
+ }
+}

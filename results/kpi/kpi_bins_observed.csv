@@ -1,0 +1,6 @@
+waste_type,bins,bin_days,mean_level_pct,mean_daily_increment_pp,collections_per_bin_week,share_days_max_ge_90,stale_share
+glass,120,28773,38.9135,1.49625,0.168328,0.026145,0.138602
+paper,122,29253,46.5922,15.1269,1.68103,0.191993,0.073599
+plastic,120,28772,42.1629,9.00427,0.984164,0.078992,0.082615
+residual,123,29493,48.3917,12.8487,2.02333,0.100679,0.026379
+unknown,5,1200,84.5,0,0,0.875,0.98

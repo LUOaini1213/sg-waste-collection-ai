@@ -1,7 +1,10 @@
 """Exact vehicle-indexed MIP for small WCVRP-IF instances, solved with HiGHS (highspy).
 
 Graph: start depot s, end depot e, the customers, and `copies` copies of every facility (each
-copy visited at most once, so a solution can unload up to copies x |F| times in total).
+copy visited at most once). By default `copies` is unload_bound(), an upper bound on the unloads
+at one facility that some optimal solution needs, so the copies do not cut off the optimum; an
+earlier fixed cap of four copies did (see README). The result is the optimum among solutions with
+at most `n_vehicles` routes.
 Variables per vehicle k: x[i,j,k] arc binaries, start time t[i,k], load after service w[i,k],
 break start b[k], and two break binaries per arc (option A: break at i after service, then drive;
 option B: drive, then break at j before service). Constraints: each customer served once,
@@ -22,12 +25,26 @@ import numpy as np
 from .instance import CUSTOMER
 
 
+def unload_bound(inst, n_vehicles: int) -> int:
+    """Upper bound on the unloads at one facility in some optimal solution with <= n_vehicles routes.
+
+    With metric distances and waiting allowed, two consecutive trips of a route whose loads fit in
+    one vehicle can be merged without increasing distance or delaying any later stop (the break can
+    be moved to the stop before the removed unload). So an optimal solution exists in which every
+    pair of consecutive trips of a route carries more than the capacity; a route collecting L then
+    has at most 2 * floor(L / Q) + 1 trips, hence at most 2 * floor(total / Q) + n_vehicles trips
+    in all, and never more than the number of customers.
+    """
+    total = float(inst.demand.sum())
+    return max(1, min(inst.n_customers, 2 * int(math.floor(total / inst.capacity + 1e-9)) + n_vehicles))
+
+
 def solve_mip(inst, n_vehicles: int, copies: int | None = None, time_limit: float = 60.0,
               threads: int = 1, verbose: bool = False) -> dict:
     C = [int(c) for c in inst.customers]
     F = [int(f) for f in inst.facilities]
     if copies is None:
-        copies = min(4, int(math.ceil(inst.demand.sum() / inst.capacity)) + 1)
+        copies = unload_bound(inst, n_vehicles)
     # MIP node list: 0 = start depot, then customers, facility copies, last = end depot
     nodes = [0] + C + [f for f in F for _ in range(copies)] + [0]
     is_fac = [False] + [False] * len(C) + [True] * (len(F) * copies) + [False]
@@ -75,8 +92,12 @@ def solve_mip(inst, n_vehicles: int, copies: int | None = None, time_limit: floa
         inn[j].append(i)
     for c in cust_idx:
         h.addConstr(sum(x[i, c, k] for k in range(K) for i in inn[c]) == 1)
+    used = {f: sum(x[i, f, k] for k in range(K) for i in inn[f]) for f in fac_idx}
     for f in fac_idx:
-        h.addConstr(sum(x[i, f, k] for k in range(K) for i in inn[f]) <= 1)
+        h.addConstr(used[f] <= 1)
+    for a, b in zip(fac_idx[:-1], fac_idx[1:]):   # copies of one facility are interchangeable: use them in order
+        if nodes[a] == nodes[b]:
+            h.addConstr(used[a] - used[b] >= 0)
     for k in range(K):
         h.addConstr(sum(x[S, j, k] for j in out[S]) == 1)
         h.addConstr(sum(x[i, E, k] for i in inn[E]) == 1)

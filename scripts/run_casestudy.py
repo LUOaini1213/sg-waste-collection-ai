@@ -27,7 +27,7 @@ from wastecollect.io import write_csv, write_json  # noqa: E402
 INPUTS = ROOT / "data" / "inputs"
 POLICIES = ("fixed", "threshold", "forecast")
 METRICS = ("km", "lifts", "truck_days", "max_trucks_per_day", "unloads", "overflow_bin_days",
-           "overflow_volume", "mean_fill_at_collection", "co2_kg", "loads_collected")
+           "overflow_volume", "mean_fill_at_collection", "co2_kg", "loads_collected", "work_hours")
 
 
 def load_inputs():
@@ -99,22 +99,23 @@ def aggregate(results) -> dict:
             pol[p] = {m: {"mean": float(np.mean(v)), "min": float(np.min(v)), "max": float(np.max(v))} for m, v in vals.items()}
             pol[p]["all_routes_feasible"] = all(r[2][p]["all_routes_feasible"] for r in runs)
         rel = {p: {m: 100.0 * (pol[p][m]["mean"] - pol["fixed"][m]["mean"]) / pol["fixed"][m]["mean"]
-                   if pol["fixed"][m]["mean"] else None for m in ("km", "lifts", "truck_days", "overflow_bin_days", "co2_kg")}
+                   if pol["fixed"][m]["mean"] else None for m in ("km", "lifts", "truck_days", "overflow_bin_days", "co2_kg", "work_hours")}
                for p in POLICIES if p != "fixed"}
         out[name] = {"seeds": [r[1] for r in runs], "config": runs[0][4], "policies": pol, "change_vs_fixed_pct": rel}
     return out
 
 
 def figures(res: dict, nodes: pd.DataFrame, daily: pd.DataFrame) -> None:
+    from matplotlib.colors import LinearSegmentedColormap
     from wastecollect import plotstyle as ps
     import matplotlib.pyplot as plt
     ps.apply()
     colors = {"fixed": ps.SERIES[0], "threshold": ps.SERIES[1], "forecast": ps.SERIES[2]}
-    labels = {"fixed": "Fixed, 3x a week", "threshold": "Reactive, reading >= 70%", "forecast": "Forecast-based"}
+    labels = {"fixed": "Fixed, 3x a week", "threshold": "Reactive, reading >= 70 %", "forecast": "Forecast-based"}
     base = res["scenarios"]["base"]["policies"]
-    fig, axes = plt.subplots(1, 4, figsize=(10.5, 3.0))
-    for ax, (m, title) in zip(axes, [("km", "Truck km (6 weeks)"), ("lifts", "Bin lifts"),
-                                     ("overflow_bin_days", "Overflow bin-days"), ("truck_days", "Truck shifts")]):
+    fig, axes = plt.subplots(1, 4, figsize=(10.5, 3.3))
+    for ax, (m, title) in zip(axes, [("km", "Truck km"), ("lifts", "Bin lifts"),
+                                     ("overflow_bin_days", "Overflow bin-days"), ("work_hours", "Crew hours")]):
         for k, p in enumerate(POLICIES):
             v = base[p][m]
             ax.bar(k, v["mean"], 0.7, color=colors[p], label=labels[p])
@@ -124,26 +125,46 @@ def figures(res: dict, nodes: pd.DataFrame, daily: pd.DataFrame) -> None:
         ax.set_xticks([])
         ax.set_title(title, loc="left", fontsize=10)
         ax.set_ylim(0, max(base[p][m]["max"] for p in POLICIES) * 1.18)
-    axes[0].legend(fontsize=8, loc="lower left", bbox_to_anchor=(0.0, -0.32), ncol=3)
-    fig.suptitle("Bishan recycling bins, base scenario (mean of 3 seeds; whiskers = min-max)", x=0.01, ha="left",
-                 fontsize=11, fontweight="bold")
+    handles, lab = axes[0].get_legend_handles_labels()
+    fig.legend(handles, lab, fontsize=9, loc="lower left", bbox_to_anchor=(0.04, -0.06), ncol=3)
+    fig.suptitle("Bishan HDB recycling bins, six simulated weeks, base scenario (mean of 3 seeds; whiskers = min-max)",
+                 x=0.045, y=1.04, ha="left", fontsize=11, fontweight="bold")
+    fig.subplots_adjust(wspace=0.38)
     ps.save(fig, ROOT / "figures" / "casestudy_kpis.png")
     b = nodes[nodes["kind"] == "bin"]
-    fac = nodes[nodes["kind"] == "facility"].iloc[0]
-    fig, ax = plt.subplots(figsize=(5.2, 4.6))
-    sc = ax.scatter(b["lon"], b["lat"], c=b["dwelling_units"], cmap="Blues", vmin=0, s=18, edgecolors=ps.INK2,
-                    linewidths=0.3)
+    cmap = LinearSegmentedColormap.from_list("blues", ["#b7d3f6", "#5598e7", "#256abf", "#0d366b"])
+    fig, ax = plt.subplots(figsize=(6.0, 4.4))
+    sc = ax.scatter(b["lon"], b["lat"], c=b["dwelling_units"], cmap=cmap, s=22, edgecolors=ps.SURFACE, linewidths=0.5)
     cb = fig.colorbar(sc, ax=ax, shrink=0.8)
     cb.set_label("Dwelling units of the block")
-    ax.annotate("unloading point (Senoko),\n~16 km by road", xy=(b["lon"].min(), b["lat"].max()),
-                xytext=(b["lon"].min(), b["lat"].max() + 0.004), fontsize=8, color=ps.INK2,
-                arrowprops=dict(arrowstyle="-|>", color=ps.INK2, lw=0.8))
-    ax.set_aspect("equal")
-    ax.set_xlabel("longitude")
-    ax.set_ylabel("latitude")
-    ax.set_title(f"{len(b)} NEA recycling bins in Bishan HDB estates", loc="left")
-    del fac
+    cb.outline.set_visible(False)
+    ax.ticklabel_format(useOffset=False, style="plain")
+    ax.set_aspect(1.0 / np.cos(np.radians(float(b["lat"].mean()))))
+    ax.set_xlabel("Longitude")
+    ax.set_ylabel("Latitude")
+    ax.set_title(f"{len(b)} recycling bins in Bishan HDB estates (NEA layer)", loc="left")
+    ax.text(0.0, -0.2, "Unloading point used in the model: about 16 km north-west by road (Senoko).", transform=ax.transAxes,
+            fontsize=8, color=ps.INK2)
     ps.save(fig, ROOT / "figures" / "casestudy_bins_map.png")
+    # scenario comparison: change of the forecast-based policy against the fixed schedule
+    names = list(res["scenarios"])
+    fig, axes = plt.subplots(1, 3, figsize=(10.5, 3.2), sharey=True)
+    ypos = np.arange(len(names))[::-1]
+    for ax, (m, title) in zip(axes, [("km", "Truck km"), ("work_hours", "Crew hours"), ("overflow_bin_days", "Overflow bin-days")]):
+        vals = [res["scenarios"][n]["change_vs_fixed_pct"]["forecast"][m] for n in names]
+        ax.barh(ypos, vals, 0.6, color=colors["forecast"])
+        ax.axvline(0, color=ps.AXIS, lw=1)
+        for y, v in zip(ypos, vals):
+            ax.text(v + (1.5 if v >= 0 else -1.5), y, f"{v:+.0f} %", va="center", ha="left" if v >= 0 else "right",
+                    fontsize=8, color=ps.INK2)
+        lim = max(abs(v) for v in vals) * 1.35 + 5
+        ax.set_xlim(-lim, lim)
+        ax.set_title(title, loc="left", fontsize=10)
+        ax.grid(axis="y", visible=False)
+    axes[0].set_yticks(ypos, [n.replace("_", " ") for n in names])
+    fig.suptitle("Forecast-based collection vs the fixed schedule, change per scenario", x=0.045, y=1.03, ha="left",
+                 fontsize=11, fontweight="bold")
+    ps.save(fig, ROOT / "figures" / "casestudy_scenarios.png")
 
 
 def ci_result() -> dict:
@@ -189,7 +210,7 @@ def main(argv=None) -> int:
     figures(res, nodes, daily)
     base = res["scenarios"]["base"]
     for p in POLICIES:
-        print(p, {m: round(base["policies"][p][m]["mean"], 1) for m in ("km", "lifts", "overflow_bin_days", "truck_days")})
+        print(p, {m: round(base["policies"][p][m]["mean"], 1) for m in ("km", "lifts", "overflow_bin_days", "work_hours")})
     return 0
 
 

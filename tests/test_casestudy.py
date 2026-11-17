@@ -51,10 +51,13 @@ def test_fixed_schedule_hand_worked():
     # routes: depot -> 10 -> 11 -> facility(0) -> depot = 22 km; east pair 42 km
     assert d[2].km == pytest.approx(22.0) and d[1].km == pytest.approx(42.0)
     assert d[2].routes == 1 and d[2].unloads == 1 and d[2].feasible
+    # 22 km at 30 km/h = 44 min driving + 2 lifts x 3 min + 20 min unloading; the break is not counted
+    assert d[2].work_hours == pytest.approx((44 + 6 + 20) / 60.0) and d[6].work_hours == 0.0
     s = res.summary(7)["fixed"]
     assert s["lifts"] == 12 and s["km"] == pytest.approx(3 * 22 + 3 * 42)
     assert s["overflow_bin_days"] == 4 and s["truck_days"] == 6 and s["max_trucks_per_day"] == 1
     assert s["co2_kg"] == pytest.approx(192 * 0.99156)
+    assert s["work_hours"] == pytest.approx(192 / 30.0 + 12 * 0.05 + 6 / 3.0)
     assert s["mean_fill_at_collection"] == pytest.approx((2 * 1.0 + 4 * 0.8 + 2 * 1.0 + 4 * 0.8) / 12)
 
 

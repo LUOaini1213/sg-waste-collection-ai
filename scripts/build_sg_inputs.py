@@ -15,10 +15,8 @@ The OD matrices are a derived database of OpenStreetMap data (ODbL 1.0).
 """
 from __future__ import annotations
 
-import hashlib
 import html
 import json
-import math
 import re
 import sys
 from pathlib import Path

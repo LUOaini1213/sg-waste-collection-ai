@@ -57,6 +57,7 @@ MUTATIONS = [
     (RA, "rng = np.random.default_rng(seed)", "rng = np.random.default_rng()", R, "ALNS: seed ignored"),
     (RM, "if j == E and not is_fac[i]:", "if False and not is_fac[i]:", R, "MIP: may return to the depot loaded"),
     (RM, "h.addConstr(w[j, k] - w[i, k] - Q * x[i, j, k] >= qj - Q)", "h.addConstr(w[j, k] - w[i, k] - Q * x[i, j, k] >= -Q)", R, "MIP: load does not accumulate along a trip"),
+    (RM, "min(inst.n_customers, 2 * int(math.floor(total / inst.capacity + 1e-9)) + n_vehicles)", "min(inst.n_customers, 4)", R, "MIP: at most four unloads per facility (the earlier cap)"),
     (FB, "    bad = (coll > 0) | stale | np.isnan(inc)", "    bad = stale | np.isnan(inc)", F, "forecast: increments on collection days kept"),
     (FB, "        bad |= inc <= -DROP_PP\n", "        pass\n", F, "forecast: unlogged emptyings kept as increments"),
     (FB, "    bad[:, 1:] |= stale[:, :-1]\n", "", F, "forecast: increment after a stale day kept"),
@@ -81,7 +82,9 @@ MUTATIONS = [
     (SQL, "AVG(km) AS km,", "SUM(km) AS km,", K, "KPI SQL: km summed over seeds instead of averaged"),
     (SQL, "100.0 * (a.km - f.km) / NULLIF(f.km, 0)         AS km_change_pct", "100.0 * (f.km - a.km) / NULLIF(f.km, 0)         AS km_change_pct", K, "KPI SQL: change sign flipped"),
     (SQL, "AVG(CASE WHEN stale = 0 THEN eod END)                                  AS mean_level_pct", "AVG(eod)                                  AS mean_level_pct", K, "KPI SQL: stale sensor days included in the mean level"),
+    (CS, "hours = (drive + sum(float(inst.service[v]) for r in lists for v in r)) / H", "hours = drive / H", C, "simulation: crew hours without lifting and unloading time"),
     (SQL, "7.0 * SUM(coll)", "SUM(coll)", K, "KPI SQL: collections per week not scaled to a week"),
+    (SQL, "AVG(work_hours) AS work_hours", "MAX(work_hours) AS work_hours", K, "KPI SQL: crew hours take the worst seed"),
     (SQL, "SUM(d.km) * MAX(m.co2_kg_per_km)       AS co2_kg", "SUM(d.km)       AS co2_kg", K, "KPI SQL: CO2 factor not applied"),
     (ED, "    x = (x - MEAN) / STD\n", "    x = x - MEAN\n", EDGE_FAST, "edge: no division by the channel standard deviation"),
     (ED, "left = int(round((nw - size) / 2.0))", "left = 0", EDGE_FAST, "edge: crop taken from the left edge instead of the centre"),
@@ -122,7 +125,9 @@ def run_one(idx: int, mut, timeout: int) -> dict:
         try:
             p = subprocess.run([sys.executable, "-m", "pytest", "-x", "-q", "-p", "no:cacheprovider", *tests.split()],
                                cwd=tmp, capture_output=True, text=True, timeout=timeout)
-            code, tail = p.returncode, (p.stdout.strip().splitlines() or [""])[-1]
+            lines = p.stdout.strip().splitlines() or [""]
+            failed = [ln for ln in lines if ln.startswith("FAILED ")]
+            code, tail = p.returncode, (failed[0].split(" - ")[0] if failed else lines[-1])
         except subprocess.TimeoutExpired:
             code, tail = -1, "timeout"
         status = {1: "killed", 0: "survived"}.get(code, "invalid")
@@ -138,7 +143,12 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
     base = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "--collect-only"], cwd=ROOT,
                           capture_output=True, text=True)
-    n_tests = sum(1 for line in base.stdout.splitlines() if "::" in line)
+    n_tests = 0
+    for line in base.stdout.splitlines():   # "tests/x.py::name" (-q) or "tests/x.py: 12" (-qq)
+        if "::" in line:
+            n_tests += 1
+        elif line.startswith("tests") and line.rsplit(": ", 1)[-1].isdigit():
+            n_tests += int(line.rsplit(": ", 1)[-1])
     control = run_one(0, CONTROL, args.timeout)
     if control["status"] != "survived":
         print("control run did not pass:", control)

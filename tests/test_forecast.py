@@ -70,11 +70,12 @@ def test_samples_skip_windows_with_collections_drops_or_stale_days():
 
 
 def test_baselines_on_hand_values():
-    S = pd.DataFrame({"y_t": [40.0, 97.0, 10.0], "h": [1, 2, 3], "m14": [5.0, 5.0, np.nan], "sn_inc": [4.0, 12.0, -30.0]})
+    S = pd.DataFrame({"y_t": [40.0, 80.0, 10.0, 97.0], "h": [1, 2, 3, 2], "m14": [5.0, 5.0, np.nan, 5.0],
+                      "sn_inc": [4.0, 12.0, -30.0, 12.0]})
     b = baselines(S)
-    assert b["persistence"].tolist() == [40.0, 97.0, 10.0]
-    assert b["mean_rate"].tolist() == [45.0, 100.0, 10.0]          # 97 + 2*5 clipped to 100; nan rate -> 0
-    assert b["seasonal_naive"].tolist() == [44.0, 100.0, 0.0]       # clipped to [0, 100]
+    assert b["persistence"].tolist() == [40.0, 80.0, 10.0, 97.0]
+    assert b["mean_rate"].tolist() == [45.0, 90.0, 10.0, 100.0]     # rate x horizon; nan rate -> 0; clipped at 100
+    assert b["seasonal_naive"].tolist() == [44.0, 92.0, 0.0, 100.0]  # clipped to [0, 100]
 
 
 def test_seasonal_naive_uses_same_weekday_increment():
