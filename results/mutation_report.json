@@ -1,0 +1,532 @@
+{
+ "tests_collected": 71,
+ "mutations": 58,
+ "killed": 58,
+ "survived": [],
+ "invalid": [],
+ "control": "survived",
+ "rows": [
+  {
+   "id": 1,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: vehicle capacity doubled",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_capacity_unload_and_route_limits"
+  },
+  {
+   "id": 2,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: load not reset at a facility",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_capacity_unload_and_route_limits"
+  },
+  {
+   "id": 3,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: return to depot without unloading allowed",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_capacity_unload_and_route_limits"
+  },
+  {
+   "id": 4,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: break (option A) takes no time",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_hand_worked_distance_and_schedule"
+  },
+  {
+   "id": 5,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: service may start before the window opens",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_break_absorbs_waiting_and_moves_after_tight_window"
+  },
+  {
+   "id": 6,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: latest start time ignored",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_break_absorbs_waiting_and_moves_after_tight_window"
+  },
+  {
+   "id": 7,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: duplicate visits not detected",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_capacity_unload_and_route_limits"
+  },
+  {
+   "id": 8,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: route (daily) capacity ignored",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_capacity_unload_and_route_limits"
+  },
+  {
+   "id": 9,
+   "file": "wastecollect/routing/checker.py",
+   "defect": "checker: last leg missing from the distance",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_hand_worked_distance_and_schedule"
+  },
+  {
+   "id": 10,
+   "file": "wastecollect/routing/routes.py",
+   "defect": "search: break on arrival takes no time",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_brk_ready_options"
+  },
+  {
+   "id": 11,
+   "file": "wastecollect/routing/routes.py",
+   "defect": "search: trip overload accepted",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_route_cache_agrees_with_checker[0]"
+  },
+  {
+   "id": 12,
+   "file": "wastecollect/routing/routes.py",
+   "defect": "search: plain insertion ignores trip capacity",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_insertion_costs_match_checker[0]"
+  },
+  {
+   "id": 13,
+   "file": "wastecollect/routing/routes.py",
+   "defect": "search: insertion cost forgets the removed arc",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_insertion_costs_match_checker[0]"
+  },
+  {
+   "id": 14,
+   "file": "wastecollect/routing/routes.py",
+   "defect": "search: [stop, unload] insertion ignores the stop's load",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_insertion_costs_match_checker[0]"
+  },
+  {
+   "id": 15,
+   "file": "wastecollect/routing/routes.py",
+   "defect": "search: one hour of lateness tolerated after an insertion",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_insertion_costs_match_checker[0]"
+  },
+  {
+   "id": 16,
+   "file": "wastecollect/routing/routes.py",
+   "defect": "search: drops the wrong facility visits",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_insertion_costs_match_checker[0]"
+  },
+  {
+   "id": 17,
+   "file": "wastecollect/routing/routes.py",
+   "defect": "search: trips never merged",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_drop_empty_trips_and_merge"
+  },
+  {
+   "id": 18,
+   "file": "wastecollect/routing/instance.py",
+   "defect": "parser: Euclidean instead of Manhattan distance",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_parse_kim_format"
+  },
+  {
+   "id": 19,
+   "file": "wastecollect/routing/instance.py",
+   "defect": "parser: HHMM minutes read as hundredths of an hour",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_parse_kim_format"
+  },
+  {
+   "id": 20,
+   "file": "wastecollect/routing/instance.py",
+   "defect": "parser: travel time in minutes instead of seconds",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_parse_kim_format"
+  },
+  {
+   "id": 21,
+   "file": "wastecollect/routing/alns.py",
+   "defect": "ALNS: removal size back to ceil(0.4 n) on tiny instances",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_alns_reaches_proven_optimum_on_five_customer_case"
+  },
+  {
+   "id": 22,
+   "file": "wastecollect/routing/alns.py",
+   "defect": "ALNS: seed ignored",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_alns_feasible_and_deterministic"
+  },
+  {
+   "id": 23,
+   "file": "wastecollect/routing/mip.py",
+   "defect": "MIP: may return to the depot loaded",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_mip_optimum_checked_and_matched_by_alns[11]"
+  },
+  {
+   "id": 24,
+   "file": "wastecollect/routing/mip.py",
+   "defect": "MIP: load does not accumulate along a trip",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_mip_optimum_checked_and_matched_by_alns[11]"
+  },
+  {
+   "id": 25,
+   "file": "wastecollect/routing/mip.py",
+   "defect": "MIP: at most four unloads per facility (the earlier cap)",
+   "tests": "tests/test_routing.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_routing.py::test_mip_allows_as_many_unloads_as_an_optimum_may_need"
+  },
+  {
+   "id": 26,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: increments on collection days kept",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_daily_increments_mask_collections_drops_and_stale_days"
+  },
+  {
+   "id": 27,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: unlogged emptyings kept as increments",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_daily_increments_mask_collections_drops_and_stale_days"
+  },
+  {
+   "id": 28,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: increment after a stale day kept",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_daily_increments_mask_collections_drops_and_stale_days"
+  },
+  {
+   "id": 29,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: evaluation windows may contain a collection",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_samples_skip_windows_with_collections_drops_or_stale_days"
+  },
+  {
+   "id": 30,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: seasonal naive uses yesterday (and future days) instead of last week",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_seasonal_naive_uses_same_weekday_increment"
+  },
+  {
+   "id": 31,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: mean-rate baseline ignores the horizon",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_baselines_on_hand_values"
+  },
+  {
+   "id": 32,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: bias sign flipped",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_metrics_hand_worked"
+  },
+  {
+   "id": 33,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: true positives counted with OR",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_metrics_hand_worked"
+  },
+  {
+   "id": 34,
+   "file": "wastecollect/forecast/backtest.py",
+   "defect": "forecast: RMSE without the square root",
+   "tests": "tests/test_forecast.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_forecast.py::test_metrics_hand_worked"
+  },
+  {
+   "id": 35,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: collections on Sundays",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_fixed_schedule_hand_worked"
+  },
+  {
+   "id": 36,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: overflow counted from 90 %",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_fixed_schedule_hand_worked"
+  },
+  {
+   "id": 37,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: bins hold more than their volume",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_fixed_schedule_hand_worked"
+  },
+  {
+   "id": 38,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: reactive threshold shifted",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_threshold_policy_hand_worked"
+  },
+  {
+   "id": 39,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: forecast policy forgets the Sunday gap",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_forecast_policy_hand_worked"
+  },
+  {
+   "id": 40,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: maximum gap between collections not enforced",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_max_gap_forces_collection"
+  },
+  {
+   "id": 41,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: fill-rate clip removed",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_units_scale_fill_rate_with_clip"
+  },
+  {
+   "id": 42,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: CO2 factor not applied",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_fixed_schedule_hand_worked"
+  },
+  {
+   "id": 43,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: uneven fixed-schedule groups",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_fixed_groups_split_west_east"
+  },
+  {
+   "id": 44,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: first measured day dropped",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_fixed_schedule_hand_worked"
+  },
+  {
+   "id": 45,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: collected bins are not emptied",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_fixed_schedule_hand_worked"
+  },
+  {
+   "id": 46,
+   "file": "wastecollect/pipeline/kpi.sql",
+   "defect": "KPI SQL: warm-up days included",
+   "tests": "tests/test_pipeline.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_pipeline.py::test_policy_totals_and_changes"
+  },
+  {
+   "id": 47,
+   "file": "wastecollect/pipeline/kpi.sql",
+   "defect": "KPI SQL: km summed over seeds instead of averaged",
+   "tests": "tests/test_pipeline.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_pipeline.py::test_policy_totals_and_changes"
+  },
+  {
+   "id": 48,
+   "file": "wastecollect/pipeline/kpi.sql",
+   "defect": "KPI SQL: change sign flipped",
+   "tests": "tests/test_pipeline.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_pipeline.py::test_policy_totals_and_changes"
+  },
+  {
+   "id": 49,
+   "file": "wastecollect/pipeline/kpi.sql",
+   "defect": "KPI SQL: stale sensor days included in the mean level",
+   "tests": "tests/test_pipeline.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_pipeline.py::test_observed_bins"
+  },
+  {
+   "id": 50,
+   "file": "wastecollect/casestudy/sim.py",
+   "defect": "simulation: crew hours without lifting and unloading time",
+   "tests": "tests/test_casestudy.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_casestudy.py::test_fixed_schedule_hand_worked"
+  },
+  {
+   "id": 51,
+   "file": "wastecollect/pipeline/kpi.sql",
+   "defect": "KPI SQL: collections per week not scaled to a week",
+   "tests": "tests/test_pipeline.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_pipeline.py::test_observed_bins"
+  },
+  {
+   "id": 52,
+   "file": "wastecollect/pipeline/kpi.sql",
+   "defect": "KPI SQL: crew hours take the worst seed",
+   "tests": "tests/test_pipeline.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_pipeline.py::test_policy_totals_and_changes"
+  },
+  {
+   "id": 53,
+   "file": "wastecollect/pipeline/kpi.sql",
+   "defect": "KPI SQL: CO2 factor not applied",
+   "tests": "tests/test_pipeline.py",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_pipeline.py::test_policy_totals_and_changes"
+  },
+  {
+   "id": 54,
+   "file": "wastecollect/edge/data.py",
+   "defect": "edge: no division by the channel standard deviation",
+   "tests": "tests/test_edge.py::test_preprocess_constant_colour_and_geometry tests/test_edge.py::test_macro_f1_and_confusion_hand_worked tests/test_edge.py::test_split_is_stratified_disjoint_and_deterministic",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_edge.py::test_preprocess_constant_colour_and_geometry"
+  },
+  {
+   "id": 55,
+   "file": "wastecollect/edge/data.py",
+   "defect": "edge: crop taken from the left edge instead of the centre",
+   "tests": "tests/test_edge.py::test_preprocess_constant_colour_and_geometry tests/test_edge.py::test_macro_f1_and_confusion_hand_worked tests/test_edge.py::test_split_is_stratified_disjoint_and_deterministic",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_edge.py::test_preprocess_constant_colour_and_geometry"
+  },
+  {
+   "id": 56,
+   "file": "wastecollect/edge/data.py",
+   "defect": "edge: Jaccard index reported as F1",
+   "tests": "tests/test_edge.py::test_preprocess_constant_colour_and_geometry tests/test_edge.py::test_macro_f1_and_confusion_hand_worked tests/test_edge.py::test_split_is_stratified_disjoint_and_deterministic",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_edge.py::test_macro_f1_and_confusion_hand_worked"
+  },
+  {
+   "id": 57,
+   "file": "wastecollect/edge/data.py",
+   "defect": "edge: training share swapped with the validation share",
+   "tests": "tests/test_edge.py::test_preprocess_constant_colour_and_geometry tests/test_edge.py::test_macro_f1_and_confusion_hand_worked tests/test_edge.py::test_split_is_stratified_disjoint_and_deterministic",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_edge.py::test_split_is_stratified_disjoint_and_deterministic"
+  },
+  {
+   "id": 58,
+   "file": "wastecollect/io.py",
+   "defect": "io: CRLF not normalised before hashing",
+   "tests": "tests/test_repo.py::test_sha256_lf_ignores_crlf",
+   "status": "killed",
+   "pytest_exit": 1,
+   "last_line": "FAILED tests/test_repo.py::test_sha256_lf_ignores_crlf"
+  }
+ ]
+}

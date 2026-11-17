@@ -1,0 +1,110 @@
+{
+ "rows": [
+  {
+   "instance": "syn11-5",
+   "customers": 5,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 2,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 46.183508,
+   "mip_bound": 46.183508,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 46.183508,
+   "alns_best": 46.183508,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": -0.0,
+   "alns_worst_seed_gap_pct": -0.0,
+   "mip_copies_per_facility": 5,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 46.183508,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 46.183508,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 46.183508,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 46.183508,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 46.183508,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn12-5",
+   "customers": 5,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 2,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 54.384584,
+   "mip_bound": 54.384584,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 54.384584,
+   "alns_best": 54.384584,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 5,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 54.384584,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 54.384584,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 54.384584,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 54.384584,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 54.384584,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  }
+ ]
+}

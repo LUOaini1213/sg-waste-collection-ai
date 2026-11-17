@@ -155,7 +155,7 @@ def block_edge() -> str:
             f"- **Mixed precision.** Keeping {', '.join(s['sensitive_blocks'])} and the activation operators in FP32 and quantising "
             f"{s['weight_nodes_quantised']} of {s['weight_nodes_total']} convolution / linear nodes gives {s['mixed_int8']:.1%} on validation and "
             f"{q['accuracy']:.1%} on test ({(q['accuracy'] - f['accuracy']) * 100:+.1f} points against FP32), a file {f['bytes'] / q['bytes']:.1f}x smaller, "
-            f"and {'no speed-up' if speed < 1.05 else f'a {speed:.2f}x speed-up'} on this CPU with one thread (p50 {f['latency_1_thread']['p50_ms']:.1f} ms FP32 vs "
+            f"and {'no speed-up' if speed < 1.05 else f'a {speed:.2f}x speed-up'} on this CPU (p50 {f['latency_1_thread']['p50_ms']:.1f} ms FP32 vs "
             f"{q['latency_1_thread']['p50_ms']:.1f} ms with one thread; with four threads {f['latency_4_threads']['p50_ms']:.1f} ms vs {q['latency_4_threads']['p50_ms']:.1f} ms). The two models agree on {e['int8_fp32_prediction_agreement']:.1%} of test images.",
             "", "Per-class recall on test (FP32 / mixed INT8): "
             + ", ".join(f"{c} {f['per_class_recall'][c]:.2f} / {q['per_class_recall'][c]:.2f}" for c in e["classes"]) + ".",

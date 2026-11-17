@@ -1,0 +1,979 @@
+{
+ "synthetic": [
+  {
+   "instance": "syn0-5",
+   "customers": 5,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 50.062357,
+   "mip_bound": 50.062357,
+   "mip_seconds": 123.946315,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 50.062357,
+   "alns_best": 50.062357,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 5,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 50.062357,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 50.062357,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 50.062357,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 50.062357,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 50.062357,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn1-5",
+   "customers": 5,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 34.003109,
+   "mip_bound": 34.003109,
+   "mip_seconds": 3.83612,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 34.003109,
+   "alns_best": 34.003109,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 5,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 34.003109,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 34.003109,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 34.003109,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 34.003109,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 34.003109,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn2-5",
+   "customers": 5,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 32.689749,
+   "mip_bound": 32.689749,
+   "mip_seconds": 25.304734,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 32.689749,
+   "alns_best": 32.689749,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 5,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 32.689749,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 32.689749,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 32.689749,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 32.689749,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 32.689749,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn3-5",
+   "customers": 5,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 51.882559,
+   "mip_bound": 51.882559,
+   "mip_seconds": 4.23162,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 51.882559,
+   "alns_best": 51.882559,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": -0.0,
+   "alns_worst_seed_gap_pct": -0.0,
+   "mip_copies_per_facility": 5,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 51.882559,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 2,
+     "distance": 51.882559,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 3,
+     "distance": 51.882559,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 4,
+     "distance": 51.882559,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 5,
+     "distance": 51.882559,
+     "feasible": true,
+     "routes": 2
+    }
+   ]
+  },
+  {
+   "instance": "syn0-6",
+   "customers": 6,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 48.505554,
+   "mip_bound": 48.505554,
+   "mip_seconds": 75.90332,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 48.505554,
+   "alns_best": 48.505554,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 6,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 48.505554,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 48.505554,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 48.505554,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 48.505554,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 48.505554,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn1-6",
+   "customers": 6,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 38.893216,
+   "mip_bound": 38.893216,
+   "mip_seconds": 42.875804,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 38.893216,
+   "alns_best": 38.893216,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 6,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 38.893216,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 38.893216,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 38.893216,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 38.893216,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 38.893216,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn2-6",
+   "customers": 6,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 42.913695,
+   "mip_bound": 42.913695,
+   "mip_seconds": 161.300385,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 42.913695,
+   "alns_best": 42.913695,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": -0.0,
+   "alns_worst_seed_gap_pct": -0.0,
+   "mip_copies_per_facility": 6,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 42.913695,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 42.913695,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 42.913695,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 42.913695,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 42.913695,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn3-6",
+   "customers": 6,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 45.664948,
+   "mip_bound": 45.664948,
+   "mip_seconds": 158.715984,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 45.664948,
+   "alns_best": 45.664948,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 6,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 45.664948,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 2,
+     "distance": 45.664948,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 3,
+     "distance": 45.664948,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 4,
+     "distance": 45.664948,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 5,
+     "distance": 45.664948,
+     "feasible": true,
+     "routes": 2
+    }
+   ]
+  },
+  {
+   "instance": "syn0-7",
+   "customers": 7,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 54.183612,
+   "mip_bound": 54.183612,
+   "mip_seconds": 277.383088,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 54.183612,
+   "alns_best": 54.183612,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": -0.0,
+   "alns_worst_seed_gap_pct": -0.0,
+   "mip_copies_per_facility": 7,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 54.183612,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 54.183612,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 54.183612,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 54.183612,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 54.183612,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn1-7",
+   "customers": 7,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 41.718535,
+   "mip_bound": 41.718535,
+   "mip_seconds": 278.133484,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 41.718535,
+   "alns_best": 41.718535,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 7,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 41.718535,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 41.718535,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 3,
+     "distance": 41.718535,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 41.718535,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 5,
+     "distance": 41.718535,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "syn2-7",
+   "customers": 7,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 49.70667,
+   "mip_bound": 49.70667,
+   "mip_seconds": 218.278564,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 49.70667,
+   "alns_best": 49.70667,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 7,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 49.70667,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 2,
+     "distance": 49.70667,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 3,
+     "distance": 49.70667,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 4,
+     "distance": 49.70667,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 5,
+     "distance": 49.70667,
+     "feasible": true,
+     "routes": 2
+    }
+   ]
+  },
+  {
+   "instance": "syn3-7",
+   "customers": 7,
+   "facilities": 2,
+   "capacity": 20.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 45.420439,
+   "mip_bound": 45.420439,
+   "mip_seconds": 56.571657,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 45.420439,
+   "alns_best": 45.420439,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": false,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.864624,
+   "mip_copies_per_facility": 7,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 45.420439,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 45.420439,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 45.420439,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 45.813155,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 45.420439,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  }
+ ],
+ "kim102": [
+  {
+   "instance": "102-first6",
+   "customers": 6,
+   "facilities": 2,
+   "capacity": 280.0,
+   "vehicles_in_mip": 2,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 17.35,
+   "mip_bound": 17.35,
+   "mip_seconds": 0.914865,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 17.35,
+   "alns_best": 17.35,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": -0.0,
+   "alns_worst_seed_gap_pct": -0.0,
+   "mip_copies_per_facility": 2,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 17.35,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 17.35,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 17.35,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 17.35,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 17.35,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "102-first6-Q40",
+   "customers": 6,
+   "facilities": 2,
+   "capacity": 40.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 26.221591,
+   "mip_bound": 26.221591,
+   "mip_seconds": 6.766978,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 26.221591,
+   "alns_best": 26.221591,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 5,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 26.221591,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 26.221591,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 26.221591,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 26.221591,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 26.221591,
+     "feasible": true,
+     "routes": 2
+    }
+   ]
+  },
+  {
+   "instance": "102-first8",
+   "customers": 8,
+   "facilities": 2,
+   "capacity": 280.0,
+   "vehicles_in_mip": 2,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 79.060227,
+   "mip_bound": 79.060227,
+   "mip_seconds": 1.915166,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 79.060227,
+   "alns_best": 79.060227,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 2,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 79.060227,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 79.060227,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 79.060227,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 79.060227,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 79.060227,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "102-first8-Q40",
+   "customers": 8,
+   "facilities": 2,
+   "capacity": 40.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 86.242045,
+   "mip_bound": 86.242045,
+   "mip_seconds": 52.437146,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 86.242045,
+   "alns_best": 86.242045,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": false,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 1.872812,
+   "mip_copies_per_facility": 5,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 87.857197,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 2,
+     "distance": 86.242045,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 3,
+     "distance": 86.242045,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 4,
+     "distance": 86.242045,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 5,
+     "distance": 86.242045,
+     "feasible": true,
+     "routes": 2
+    }
+   ]
+  },
+  {
+   "instance": "102-first10",
+   "customers": 10,
+   "facilities": 2,
+   "capacity": 280.0,
+   "vehicles_in_mip": 2,
+   "mip_status": "Optimal",
+   "mip_optimal": true,
+   "mip_objective": 80.674242,
+   "mip_bound": 80.674242,
+   "mip_seconds": 7.597731,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 80.674242,
+   "alns_best": 80.674242,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": true,
+   "alns_hits_optimum_all": true,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": 0.0,
+   "alns_worst_seed_gap_pct": 0.0,
+   "mip_copies_per_facility": 2,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 80.674242,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 80.674242,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 80.674242,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 4,
+     "distance": 80.674242,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 80.674242,
+     "feasible": true,
+     "routes": 1
+    }
+   ]
+  },
+  {
+   "instance": "102-first10-Q40",
+   "customers": 10,
+   "facilities": 2,
+   "capacity": 40.0,
+   "vehicles_in_mip": 3,
+   "mip_status": "Time limit reached",
+   "mip_optimal": false,
+   "mip_objective": 89.80947,
+   "mip_bound": 85.629545,
+   "mip_seconds": 300.021976,
+   "mip_routes_checked": true,
+   "mip_checked_distance": 89.80947,
+   "alns_best": 89.80947,
+   "alns_all_feasible": true,
+   "alns_hits_optimum_any": false,
+   "alns_hits_optimum_all": false,
+   "alns_below_proven_optimum": false,
+   "alns_gap_pct": -0.0,
+   "alns_worst_seed_gap_pct": -0.0,
+   "mip_copies_per_facility": 7,
+   "alns": [
+    {
+     "seed": 1,
+     "distance": 89.80947,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 2,
+     "distance": 89.80947,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 3,
+     "distance": 89.80947,
+     "feasible": true,
+     "routes": 2
+    },
+    {
+     "seed": 4,
+     "distance": 89.80947,
+     "feasible": true,
+     "routes": 1
+    },
+    {
+     "seed": 5,
+     "distance": 89.80947,
+     "feasible": true,
+     "routes": 2
+    }
+   ]
+  }
+ ],
+ "time_limit_s": 300.0
+}
