@@ -97,16 +97,16 @@ this is a comparison of reported values only.
 ![Instance 102, best run](figures/routing_102_routes.png)
 
 **Exact validation on small instances.** The MIP is solved to proven optimality where possible
-(time limit 300 s per instance), its routes are re-checked by the independent checker, and ALNS
+(with a time limit per instance), its routes are re-checked by the independent checker, and ALNS
 (5 seeds, 300 iterations) is compared with the optimum.
 
 <!-- BEGIN:mip -->
 | Group | Instances | MIP proved optimal | MIP routes pass the checker | ALNS = optimum (best of 5 seeds) | ALNS = optimum (all 5 seeds) | ALNS below a proven optimum | Largest gap, best seed | Largest gap, any seed |
 |---|---|---|---|---|---|---|---|---|
 | SYNTHETIC, 5-7 stops, 2 IFs | 12 | 12 | 12 | 12/12 | 11/12 | 0 | 0.00 % | 0.86 % |
-| First 6-10 stops of instance 102 (two capacities) | 6 | 5 | 6 | 5/5 | 4/5 | 0 | 0.00 % | 1.87 % |
+| First 6-10 stops of instance 102 (two capacities) | 6 | 6 | 6 | 6/6 | 5/6 | 0 | 0.00 % | 1.87 % |
 
-Not proved optimal within the time limit (ALNS compared with the MIP's best solution instead): 102-first10-Q40 (MIP 89.809, bound 85.630, ALNS 89.809).
+MIP time limit: 900 s per instance (solve times are in `results/routing_mip.json`; they depend on the machine).
 <!-- END:mip -->
 
 "Optimal" here means optimal among solutions with at most the number of vehicles given to the

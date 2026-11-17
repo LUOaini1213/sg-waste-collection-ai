@@ -29,7 +29,7 @@ SYNTH = [(seed, n) for n in (5, 6, 7) for seed in range(4)]
 SYNTH_CI = [(11, 5), (12, 5)]
 KIM_N = (6, 8, 10)
 ALNS_SEEDS = (1, 2, 3, 4, 5)
-TIME_LIMIT = 300.0   # seconds per MIP; instances not solved in time are reported as not proved optimal
+TIME_LIMIT = 900.0   # seconds per MIP; instances not solved in time are reported as not proved optimal
 
 
 def check(inst, vehicles, time_limit, iters):

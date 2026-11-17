@@ -76,9 +76,10 @@ def block_mip() -> str:
         out.append(f"| {names[g]} | {len(rows)} | {len(opt)} | {sum(x['mip_routes_checked'] for x in rows)} | "
                    f"{sum(x['alns_hits_optimum_any'] for x in opt)}/{len(opt)} | {sum(x['alns_hits_optimum_all'] for x in opt)}/{len(opt)} | "
                    f"{sum(x['alns_below_proven_optimum'] for x in opt)} | {gap:.2f} % | {worst:.2f} % |")
+    out += ["", f"MIP time limit: {m['time_limit_s']:.0f} s per instance (solve times are in `results/routing_mip.json`; they depend on the machine)."]
     lim = [x for g in ("synthetic", "kim102") for x in m.get(g, []) if not x["mip_optimal"]]
     if lim:
-        out += ["", "Not proved optimal within the time limit (ALNS compared with the MIP's best solution instead): "
+        out += ["", f"Not proved optimal within the time limit of {m['time_limit_s']:.0f} s (ALNS compared with the MIP's best solution instead): "
                 + ", ".join(f"{x['instance']} (MIP {x['mip_objective']:.3f}, bound {x['mip_bound']:.3f}, ALNS {x['alns_best']:.3f})" for x in lim) + "."]
     return "\n".join(out)
 

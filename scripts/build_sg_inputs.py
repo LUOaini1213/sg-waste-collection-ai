@@ -73,7 +73,7 @@ def load_bins(poly):
         if a.get("NAME") != "Recycling Bins in HDB Estates" or not poly.contains(Point(lon, lat)):
             continue
         rows.append({"lat": lat, "lon": lon, "block": a.get("ADDRESSBLOCKHOUSENUMBER", ""),
-                     "street": a.get("ADDRESSSTREETNAME", ""), "postal": a.get("ADDRESSPOSTALCODE", ""),
+                     "street": a.get("ADDRESSSTREETNAME", ""),
                      "feature_updated": a.get("FMEL_UPD_D", "")[:8]})
     df = pd.DataFrame(rows).drop_duplicates(["lat", "lon"]).sort_values(["street", "block", "lat", "lon"])
     return df.reset_index(drop=True), len(rows)
@@ -208,7 +208,6 @@ def main() -> int:
         "idx": np.arange(m), "kind": ["depot", "facility"] + ["bin"] * len(bins),
         "lat": pts_lat, "lon": pts_lon,
         "block": ["", ""] + bins["block"].tolist(), "street": ["", FACILITY_STREET] + bins["street"].tolist(),
-        "postal": ["", ""] + bins["postal"].tolist(),
         "dwelling_units": [0, 0] + bins["dwelling_units"].round(0).astype(int).tolist(),
         "units_source": ["", ""] + bins["units_source"].tolist(),
         "feature_updated": ["", ""] + bins["feature_updated"].tolist(),
